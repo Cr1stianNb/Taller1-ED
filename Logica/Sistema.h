@@ -7,11 +7,11 @@
 class Sistema
 {
     private:
-        std::vector<Usuario> listaUsuarios;
-        std::vector<Software> listaSoftwares;
+        std::vector<Usuario*>* listaUsuarios;
+        std::vector<Software*>* listaSoftwares;
 
     public:
-
+        Sistema();
         bool verificarAcceso(std::string, std::string);
         int getTipoUsuario(std::string, std::string);
         // Agregar Administrador a la lista

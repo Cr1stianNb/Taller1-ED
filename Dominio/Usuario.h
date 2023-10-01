@@ -1,7 +1,7 @@
 #ifndef USUARIO_1
 #define USUARIO_1
 #include <string>
-
+#include "../Logica/IVisitor.h"
 
 class Usuario
 {
@@ -11,12 +11,16 @@ class Usuario
         int edad;
         // ListaSoftware* ListaSoftware;
     public:
-        const static int ADMINISTRADOR=1, USUARIO=2, INFANTIL=3;
+        const static int ADMINISTRADOR=1, USUARIO_MAYOR=2, USUARIO_MENOR=3;
 
         Usuario(std::string, std::string, int);
+        Usuario(const Usuario&);
         std::string getNombre();
         std::string getClave();
         int getEdad();
+
+        // patron visitor 
+        virtual void visita(IVisitor*) = 0;
 };
 
 #endif

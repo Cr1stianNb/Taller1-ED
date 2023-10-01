@@ -1,9 +1,11 @@
 #include <iostream>
+
 #include "Dominio/Software.cpp"
 #include "Dominio/Usuario.cpp"
 #include "Dominio/Juego.cpp"
-#include "Logica/Sistema.h"
-
+#include "Logica/Sistema.cpp"
+#include "Dominio/Administrador.cpp"
+#include "Logica/Visitor.cpp"
 using namespace std;
 
 
@@ -25,14 +27,19 @@ int main()
     Sistema *sistema = new Sistema();
     Software* soft = new Software("Facebook", "Mark", "Menores a 17", 12.12);
     Software* jueguito = new Juego("Mario", "Un japo", "toda edad", 291.12, "Plataformero");
-    Usuario* usuario1 = new Usuario("Cristian", "clave123", 20);
+    Usuario* usuario1 = new Administrador("Cristian", "clave123", 20);
+    VisitorUsuario *visitor = new VisitorUsuario();
+    usuario1->visita(visitor);
+    cout << usuario1->getNombre() << " " << visitor->getTipo() <<endl;
 
+    /*
     bool flag = true;
     while(flag)
     {
         login(sistema);
         flag = logout();
     }
+    */
 
     return 0;
 }
@@ -59,11 +66,11 @@ void login(Sistema*sistema)
             mostrarMenuAdmin(nombre, clave, sistema);
             break;
 
-        case Usuario::USUARIO:
+        case Usuario::USUARIO_MAYOR:
             mostrarMenuUsuario(nombre, clave, sistema);
             break;
 
-        case Usuario::INFANTIL:
+        case Usuario::USUARIO_MENOR:
             mostrarMenuUsuario(nombre, clave, sistema);
             break;
         default:
