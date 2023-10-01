@@ -6,4 +6,14 @@ Ofimatica::Ofimatica(std::string nombre, std::string developer, std::string clas
 
 int Ofimatica::getCantArchivo(){return this->cantArchivos;};
 
+bool Ofimatica::agregarArchivo()
+{
+    this->cantArchivos++;
+};
+
+bool Ofimatica::eliminarArchivo()
+{
+    this->cantArchivos--;
+};
+
 

@@ -2,6 +2,8 @@
 #define JUEGO
 #include "Software.h"
 
+const std::string GENEROS[10] {"FPS", "MMO", "PUZZLE", "PLATAFORMERO", "RPG", "HORROR", "ESTRATEGIA", "DEPORTES", "ACCIÓN", "ADVENTURAS"};
+
 class Juego : public Software
 {
     private:

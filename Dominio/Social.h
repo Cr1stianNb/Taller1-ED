@@ -1,14 +1,17 @@
 #ifndef SOCIAL
 #define SOCIAL
 #include "Software.h"
+
 class Social : public Software
 {
     private:
-        //ListaUsuarios* amigos;
+        std::vector<Usuario> listaAmigos;
 
     public:
         Social(std::string, std::string, std::string, double);
-        // getAmigos...
+        Usuario getAmigo(std::string);
+        bool agregarAmigo(std::string);
+        bool eliminarAmigo(std::string);
 
 };
 

@@ -10,6 +10,8 @@ class Ofimatica : public Software
     public:
         Ofimatica(std::string, std::string, std::string, double);
         int getCantArchivo();
+        bool agregarArchivo();
+        bool eliminarArchivo();
 };
 
 

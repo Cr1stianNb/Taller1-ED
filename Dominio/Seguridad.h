@@ -2,6 +2,9 @@
 #define SEGURIDAD
 #include "Software.h"
 
+
+const std::string MALWARES[6] {"Ransomware", "Spyware", "botnets", "rootkits", "gusanos", "troyanos"};
+
 class Seguridad : public Software
 {
     private:

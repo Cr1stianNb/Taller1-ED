@@ -13,3 +13,7 @@ std::string Software::getNombre(){return this->nombre;};
 std::string Software::getDeveloper(){return this->developer;};
 std::string Software::getClasificacion(){return this->clasificacion;};
 double Software::getPrecio(){return this->precio;};
+void Software::hacerAlgo()
+{
+    std::cout << "Escribo alfo por mensaje";
+};

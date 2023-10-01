@@ -1,16 +1,16 @@
 #ifndef SOFTWARE
 #define SOFTWARE
 #include <string>
-
-
-class Software
+#include <vector>
+#include "Usuario.h"
+class Software 
 {
     
     private:
         std::string nombre;
         std::string developer;
         std::string clasificacion;
-        // ListaUsuario listaUsuarios;
+        std::vector<Usuario> listaUsuario;
         double precio;
 
     public:
@@ -20,6 +20,7 @@ class Software
         std::string getDeveloper();
         std::string getClasificacion();
         double getPrecio();
+        void hacerAlgo();
 
    
 
