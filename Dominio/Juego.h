@@ -1,7 +1,6 @@
 #ifndef JUEGO
 #define JUEGO
 #include "Software.h"
-#include <string>
 
 class Juego : public Software
 {
