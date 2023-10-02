@@ -15,6 +15,7 @@ class VisitorUsuario : public IVisitor
         int tipoUsuario;
     public:
         VisitorUsuario();
+        ~VisitorUsuario();
         void acepta(Administrador);
         void acepta(UsuarioMenor);
         void acepta(UsuarioMayor);

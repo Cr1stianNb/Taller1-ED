@@ -6,7 +6,8 @@
 class UsuarioMenor : public Usuario 
 {
     public:
-        void visita(IVisitor*);
+        UsuarioMenor(std::string, std::string, int);
+        virtual void visita(IVisitor*);
 };
 
 

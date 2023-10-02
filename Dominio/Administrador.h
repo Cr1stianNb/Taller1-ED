@@ -10,7 +10,7 @@ class Administrador : public Usuario
 
     public:
         Administrador(std::string, std::string, int);
-        void visita(IVisitor*);
+        virtual void visita(IVisitor*);
 };
 
 

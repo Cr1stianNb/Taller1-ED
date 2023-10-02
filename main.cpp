@@ -5,6 +5,8 @@
 #include "Dominio/Juego.cpp"
 #include "Logica/Sistema.cpp"
 #include "Dominio/Administrador.cpp"
+#include "Dominio/UsuarioMenor.cpp"
+#include "Dominio/UsuarioMayor.cpp"
 #include "Logica/Visitor.cpp"
 using namespace std;
 
@@ -24,13 +26,27 @@ void accederLog(string, string, Sistema*);
 
 int main()
 {
-    Sistema *sistema = new Sistema();
-    Software* soft = new Software("Facebook", "Mark", "Menores a 17", 12.12);
-    Software* jueguito = new Juego("Mario", "Un japo", "toda edad", 291.12, "Plataformero");
-    Usuario* usuario1 = new Administrador("Cristian", "clave123", 20);
-    VisitorUsuario *visitor = new VisitorUsuario();
-    usuario1->visita(visitor);
-    cout << usuario1->getNombre() << " " << visitor->getTipo() <<endl;
+    Sistema* sistema = new Sistema();
+    sistema->agregarUsuarioNormal("Manuel", "123", 10);
+    sistema->agregarAdmin("Cristian", "123", 20);
+    sistema->agregarUsuarioNormal("Kaka", "123", 20);
+
+    cout << sistema->getTipoUsuario("Manuel", "123") << endl;
+    cout << sistema->getTipoUsuario("Kaka", "123") << endl;
+    cout << sistema->getTipoUsuario("Cristian", "123") << endl;
+
+    bool a = sistema->verificarAcceso("Cristian", "123");
+
+    sistema->mostrarUsuarios();
+
+    if(a)
+    {
+        cout << "funciona" << endl;
+    }
+    else 
+    {
+        cout << "nO funciona" << endl;
+    }
 
     /*
     bool flag = true;

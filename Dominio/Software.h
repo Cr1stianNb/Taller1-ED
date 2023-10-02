@@ -15,7 +15,7 @@ class Software
 
     public:
 
-        Software(std::string, std::string, std::string, double precio);
+        Software(std::string, std::string, std::string, double);
         std::string getNombre();
         std::string getDeveloper();
         std::string getClasificacion();
