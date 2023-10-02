@@ -10,7 +10,7 @@ class Software
         std::string nombre;
         std::string developer;
         std::string clasificacion;
-        std::vector<Usuario>* listaUsuario;
+        std::vector<Usuario*>* listaUsuario;
         double precio;
 
     public:
@@ -20,7 +20,8 @@ class Software
         std::string getDeveloper();
         std::string getClasificacion();
         double getPrecio();
-        void hacerAlgo();
+        bool agregarUsuario(Usuario*);
+        Usuario* getUsuario(std::string);
 
         virtual Software* clonar() const;
 

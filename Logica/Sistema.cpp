@@ -33,7 +33,7 @@ void Sistema::mostrarUsuarios()
 // no se permite usuarios con el mismo nombre
 bool Sistema::agregarAdmin(string nombre, string clave, int edad)
 {
-    if(this->getUsuario(nombre, clave)) return false;
+    if(this->getUsuario(nombre, clave) != nullptr) return false;
 
     Usuario* admin = new Administrador(nombre, clave, edad);
     this->listaUsuarios->push_back(admin);
@@ -41,7 +41,7 @@ bool Sistema::agregarAdmin(string nombre, string clave, int edad)
 };
 bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad)
 {
-    if(this->getUsuario(nombre, clave)) return false; 
+    if(this->getUsuario(nombre, clave) != nullptr) return false; 
 
     Usuario* us;
     if(edad < 18)
@@ -99,10 +99,11 @@ Software* Sistema::getSoftware(string nombre)
         }
     }
     return nullptr;
-};
+}
+
 bool Sistema::agregarJuego(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string genero)
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Juego(nombre, developer, clasificacion, precio, genero);
     listaSoftwares->push_back(software);
     return true;
@@ -110,21 +111,21 @@ bool Sistema::agregarJuego(std::string nombre, std::string developer, std::strin
 };
 bool Sistema::agregarNavegador(std::string nombre, std::string developer, std::string clasificacion, double precio)
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Navegador(nombre, developer, clasificacion, precio);
     listaSoftwares->push_back(software);
     return true;
 };
 bool Sistema::agregarOfimatica(std::string nombre, std::string developer, std::string clasificacion, double precio)
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Ofimatica(nombre, developer, clasificacion, precio);
     listaSoftwares->push_back(software);
     return true;
 };
 bool Sistema::agregarProduccion(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipo)
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Produccion(nombre, developer, clasificacion, precio, tipo);
     listaSoftwares->push_back(software);
     return true;
@@ -132,7 +133,7 @@ bool Sistema::agregarProduccion(std::string nombre, std::string developer, std::
 
 bool Sistema::agregarSeguridad(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipoMalware)
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Seguridad(nombre, developer, clasificacion, precio, tipoMalware);
     listaSoftwares->push_back(software);
     return true;
@@ -140,7 +141,7 @@ bool Sistema::agregarSeguridad(std::string nombre, std::string developer, std::s
 bool Sistema::agregarSocial(std::string nombre, std::string developer, std::string clasificacion, double precio)
 
 {
-    if(this->getSoftware(nombre) == nullptr) return false;
+    if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Social(nombre, developer, clasificacion, precio);
     listaSoftwares->push_back(software);
     return true;
@@ -151,17 +152,45 @@ bool Sistema::agregarSocial(std::string nombre, std::string developer, std::stri
 
 bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
 {
-    if(getUsuario(nombre, clave) == nullptr) return false;
-    if(getSoftware(nombreSoftware) == nullptr) return false;
-
     Usuario* usuario = getUsuario(nombre, clave);
-    Software* software = getSoftware(nombreSoftware)->clonar();
+    Software* software = getSoftware(nombreSoftware);
+    if(usuario == nullptr) return false;
+    if(software == nullptr) return false;
 
-    usuario->agregarSoftware(software);
+    software->agregarUsuario(usuario);
+    Software* soft = software->clonar();
+    usuario->agregarSoftware(soft);
     return true;
 
 };
 bool Sistema::eliminarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
 {
-    return true;
+    if(getUsuario(nombre, clave) == nullptr) return false;
+    if(getSoftware(nombreSoftware) == nullptr) return false;
+
+    Usuario* us = this->getUsuario(nombre, clave);
+    Software* soft = this->getSoftware(nombreSoftware);
+    return us->eliminarSoftware(soft);
+}
+
+bool Sistema::eliminarSoftwareSistema(Software* software)
+{
+    if(software == nullptr) return false;
+    for(int i=0; i<listaSoftwares->size();i++)
+    {
+        if(listaSoftwares->at(i)->getNombre() == software->getNombre())
+        {
+            listaSoftwares->erase(listaSoftwares->begin() + i);
+            return true;
+        }
+    }
+    return false;
+};
+
+bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
+{
+    Software* software = getSoftware(nombreSoftware);
+    if(software == nullptr) return false;
+
+    return eliminarSoftwareSistema(software);
 };

@@ -34,51 +34,39 @@ int main()
 {
 
     Sistema* sistema = new Sistema();
+    
+    
+    sistema->agregarAdmin("Cristian", "123", 20); 
+    sistema->agregarUsuarioNormal("Manuel", "123", 10);
+    sistema->agregarUsuarioNormal("Manuel", "123", 10);
+    sistema->agregarUsuarioNormal("Manuel", "123", 10);
+    sistema->agregarUsuarioNormal("Kaka", "123", 20); 
 
-
+  
     Software* soft = new Juego("Mario", "un japo", "toda edad", 9219.2, "Aventuras");
     Software* soft2 = soft->clonar();
 
-    cout << "Id :" << soft << endl;
-    cout << "Id :" << soft2 << endl;
+    sistema->agregarJuego("Mario", "Japo", "toda edad", 912.1, "Adventuras");
 
-    Juego* juego = dynamic_cast<Juego*>(soft2);
-    Juego* juego2 = dynamic_cast<Juego*>(soft);
-    juego->genero = "Jijijja";
-    cout << "Id: " << juego2 << " Genero: " << juego2->getGenero() << endl;
-    cout << "Id: " << juego << " Genero: " << juego->getGenero() << endl;
+    cout << sistema->agregarSoftwareUsuario("Cristian", "123", "Mario") << endl;
+    cout << sistema->agregarSoftwareUsuario("Cristian", "123", "qwe") << endl;
+    cout << sistema->eliminarSoftwareUsuario("Cristian", "123", "Mario") << endl;
+    
+    
+    
 
 
-    sistema->agregarUsuarioNormal("Manuel", "123", 10);
-    sistema->agregarAdmin("Cristian", "123", 20);
-    sistema->agregarUsuarioNormal("Kaka", "123", 20);
+    
 
-    cout << sistema->getTipoUsuario("Manuel", "123") << endl;
-    cout << sistema->getTipoUsuario("Kaka", "123") << endl;
-    cout << sistema->getTipoUsuario("Cristian", "123") << endl;
-
-    bool a = sistema->verificarAcceso("Cristian", "123");
-
-    sistema->mostrarUsuarios();
-
-    if(a)
-    {
-        cout << "funciona" << endl;
-    }
-    else 
-    {
-        cout << "nO funciona" << endl;
-    }
-
-    /*
+    /*    
     bool flag = true;
     while(flag)
     {
         login(sistema);
         flag = logout();
     }
+    
     */
-
     return 0;
 }
 

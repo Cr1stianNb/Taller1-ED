@@ -24,8 +24,15 @@ bool Usuario::agregarSoftware(Software * software)
     this->listaSoftware->push_back(software);
     return true;
 }
-bool Usuario::eliminarSoftware(Software * software)
+bool Usuario::eliminarSoftware(Software* software)
 {
-    this->listaSoftware->
+    for(int i=0; i<listaSoftware->size();i++)
+    {
+        if(software->getNombre() == listaSoftware->at(i)->getNombre())
+        {
+            listaSoftware->erase(listaSoftware->begin() + i);
+            return true;
+        }
+    }
     return false;
 };

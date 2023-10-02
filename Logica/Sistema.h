@@ -12,6 +12,7 @@ class Sistema
 
         Usuario* getUsuario(std::string, std::string);
         Software* getSoftware(std::string);
+        bool eliminarSoftwareSistema(Software*);
 
     public:
         Sistema();
@@ -31,9 +32,8 @@ class Sistema
         bool agregarSocial(std::string, std::string, std::string, double);
         bool agregarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareUsuario(std::string, std::string, std::string);
-
-        bool eliminarSoftwareUsuario(std::string, std::string);
-        bool eliminarSoftwareBiblioteca(std::string, std::string);
+        bool eliminarSoftwareBiblioteca(std::string);
+    
         
 
 
