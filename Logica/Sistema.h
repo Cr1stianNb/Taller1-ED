@@ -11,6 +11,7 @@ class Sistema
         std::vector<Software*>* listaSoftwares;
 
         Usuario* getUsuario(std::string, std::string);
+        Software* getSoftware(std::string);
 
     public:
         Sistema();
@@ -28,10 +29,11 @@ class Sistema
         bool agregarProduccion(std::string , std::string, std::string, double , std::string);
         bool agregarSeguridad(std::string, std::string, std::string, double, std::string);
         bool agregarSocial(std::string, std::string, std::string, double);
-        
-        
         bool agregarSoftwareUsuario(std::string, std::string, std::string);
-        bool eliminarSoftwareUsuario(std::string, std::string, std::stirng);
+        bool eliminarSoftwareUsuario(std::string, std::string, std::string);
+
+        bool eliminarSoftwareUsuario(std::string, std::string);
+        bool eliminarSoftwareBiblioteca(std::string, std::string);
         
 
 

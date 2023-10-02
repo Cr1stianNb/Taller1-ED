@@ -1,5 +1,5 @@
 //Visitor.cpp
-#include "Visitor.h"
+#include "VisitorUsuario.h"
 #include "../Dominio/Administrador.h"
 #include "../Dominio/UsuarioMenor.h"
 #include "../Dominio/UsuarioMayor.h" 

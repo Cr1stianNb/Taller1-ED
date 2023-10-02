@@ -7,7 +7,13 @@
 #include "Dominio/Administrador.cpp"
 #include "Dominio/UsuarioMenor.cpp"
 #include "Dominio/UsuarioMayor.cpp"
-#include "Logica/Visitor.cpp"
+#include "Logica/VisitorUsuario.cpp"
+#include "Dominio/Navegador.cpp"
+#include "Dominio/Ofimatica.cpp"
+#include "Dominio/Produccion.cpp"
+#include "Dominio/Seguridad.cpp"
+#include "Dominio/Social.cpp"
+
 using namespace std;
 
 
@@ -26,7 +32,23 @@ void accederLog(string, string, Sistema*);
 
 int main()
 {
+
     Sistema* sistema = new Sistema();
+
+
+    Software* soft = new Juego("Mario", "un japo", "toda edad", 9219.2, "Aventuras");
+    Software* soft2 = soft->clonar();
+
+    cout << "Id :" << soft << endl;
+    cout << "Id :" << soft2 << endl;
+
+    Juego* juego = dynamic_cast<Juego*>(soft2);
+    Juego* juego2 = dynamic_cast<Juego*>(soft);
+    juego->genero = "Jijijja";
+    cout << "Id: " << juego2 << " Genero: " << juego2->getGenero() << endl;
+    cout << "Id: " << juego << " Genero: " << juego->getGenero() << endl;
+
+
     sistema->agregarUsuarioNormal("Manuel", "123", 10);
     sistema->agregarAdmin("Cristian", "123", 20);
     sistema->agregarUsuarioNormal("Kaka", "123", 20);

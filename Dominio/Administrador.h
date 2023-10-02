@@ -1,7 +1,6 @@
 #ifndef ADMINISTRADOR_1
 #define ADMINISTRADOR_1
 #include "Usuario.h"
-#include "../Logica/IVisitor.h"
 
 class Administrador : public Usuario 
 {

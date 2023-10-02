@@ -1,6 +1,6 @@
 #ifndef VISITOR_USUARIOS
 #define VISITOR_USUARIOS
-#include "IVisitor.h"
+#include "IVisitorUsuario.h"
 
 
 

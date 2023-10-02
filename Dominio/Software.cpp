@@ -1,6 +1,13 @@
 #pragma once
 #include "Software.h"
-Software::Software(std::string nombre, std::string developer, std::string clasificacion, double precio )
+Software::Software(const Software& otro)
+{
+     this->nombre = otro.nombre;
+    this->developer = otro.developer;
+    this->clasificacion  = otro.clasificacion;
+    this->precio = otro.precio;
+}
+Software::Software(std::string nombre, std::string developer, std::string clasificacion, double precio)
 {
     this->nombre = nombre;
     this->developer = developer;
@@ -16,4 +23,9 @@ double Software::getPrecio(){return this->precio;};
 void Software::hacerAlgo()
 {
     std::cout << "Escribo alfo por mensaje";
-};
+}
+
+Software *Software::clonar() const
+{
+    return new Software(*this);
+}

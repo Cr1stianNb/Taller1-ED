@@ -1,5 +1,9 @@
 #include "Seguridad.h"
 
+Seguridad::Seguridad(const Seguridad& otro): Software(otro.nombre, otro.developer, otro.clasificacion, otro.precio)
+{
+    this->precio = otro.precio;
+};
 
 Seguridad::Seguridad(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipo):
     Software(nombre, developer, clasificacion, precio)
@@ -9,3 +13,6 @@ Seguridad::Seguridad(std::string nombre, std::string developer, std::string clas
 
 std::string Seguridad::getTipo(){return this->tipo;};
 
+Seguridad* Seguridad::clonar() const {
+    return new Seguridad(*this);
+};

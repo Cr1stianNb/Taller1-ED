@@ -1,9 +1,14 @@
 #include "Sistema.h"
-#include "Visitor.h"
+#include "VisitorUsuario.h"
 
 #include "../Dominio/UsuarioMenor.h"
 #include "../Dominio/Administrador.h"
 #include "../Dominio/UsuarioMayor.h"
+#include "../Dominio/Ofimatica.h"
+#include "../Dominio/Produccion.h"
+#include "../Dominio/Seguridad.h"
+#include "../Dominio/Social.h"
+#include "../Dominio/Navegador.h"
 #include <iostream>
 using namespace std;
 
@@ -34,13 +39,11 @@ bool Sistema::agregarAdmin(string nombre, string clave, int edad)
     this->listaUsuarios->push_back(admin);
     return true;
 };
-
-
-
 bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad)
 {
-    if(this->getUsuario(nombre, clave)) return false;   
+    if(this->getUsuario(nombre, clave)) return false; 
 
+    Usuario* us;
     if(edad < 18)
     {
         us = new UsuarioMenor(nombre, clave, edad);
@@ -53,9 +56,6 @@ bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int ed
     this->listaUsuarios->push_back(us);
     return true;
 };
-
-
-
 Usuario* Sistema::getUsuario(string nombre, string clave)
 {
     for(int i=0; i<listaUsuarios->size();i++)
@@ -68,18 +68,12 @@ Usuario* Sistema::getUsuario(string nombre, string clave)
     return nullptr;
     
 };
-
-
-
 bool Sistema::verificarAcceso(string nombreUs, string claveUs)
 {
     if(this->getUsuario(nombreUs, claveUs)) return true;
     cout <<  "Usuario o contraseña no se han encontrado, vuelva a intentarlo..." << endl;
     return false;
 };
-
-
-
 int Sistema::getTipoUsuario(string nombre, string clave)
 {
     VisitorUsuario *visitadorUsuario = new VisitorUsuario();
@@ -93,4 +87,81 @@ int Sistema::getTipoUsuario(string nombre, string clave)
     }  
     delete visitadorUsuario;
     return tipo;
+};
+
+Software* Sistema::getSoftware(string nombre)
+{
+    for(int i=0; i<listaSoftwares->size();i++)
+    {
+        if(listaSoftwares->at(i)->getNombre() == nombre)
+        {
+            return listaSoftwares->at(i);
+        }
+    }
+    return nullptr;
+};
+bool Sistema::agregarJuego(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string genero)
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Juego(nombre, developer, clasificacion, precio, genero);
+    listaSoftwares->push_back(software);
+    return true;
+
+};
+bool Sistema::agregarNavegador(std::string nombre, std::string developer, std::string clasificacion, double precio)
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Navegador(nombre, developer, clasificacion, precio);
+    listaSoftwares->push_back(software);
+    return true;
+};
+bool Sistema::agregarOfimatica(std::string nombre, std::string developer, std::string clasificacion, double precio)
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Ofimatica(nombre, developer, clasificacion, precio);
+    listaSoftwares->push_back(software);
+    return true;
+};
+bool Sistema::agregarProduccion(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipo)
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Produccion(nombre, developer, clasificacion, precio, tipo);
+    listaSoftwares->push_back(software);
+    return true;
+};
+
+bool Sistema::agregarSeguridad(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipoMalware)
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Seguridad(nombre, developer, clasificacion, precio, tipoMalware);
+    listaSoftwares->push_back(software);
+    return true;
+};
+bool Sistema::agregarSocial(std::string nombre, std::string developer, std::string clasificacion, double precio)
+
+{
+    if(this->getSoftware(nombre) == nullptr) return false;
+    Software* software = new Social(nombre, developer, clasificacion, precio);
+    listaSoftwares->push_back(software);
+    return true;
+};
+
+
+
+
+bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
+{
+    if(getUsuario(nombre, clave) == nullptr) return false;
+    if(getSoftware(nombreSoftware) == nullptr) return false;
+
+    Usuario* usuario = getUsuario(nombre, clave);
+    Software* software = getSoftware(nombreSoftware)->clonar();
+
+    usuario->agregarSoftware(software);
+    return true;
+
+};
+bool Sistema::eliminarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
+{
+    return true;
 };

@@ -6,11 +6,14 @@ const std::string GENEROS[10] {"FPS", "MMO", "PUZZLE", "PLATAFORMERO", "RPG", "H
 
 class Juego : public Software
 {
-    private:
+    public:
         std::string genero;
     public:
+        Juego(const Juego&);
         Juego(std::string, std::string, std::string, double, std::string);
         std::string getGenero();
+
+        Juego* clonar() const override;
 };
 
 

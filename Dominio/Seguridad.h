@@ -12,8 +12,10 @@ class Seguridad : public Software
         std::string tipo;
 
     public:
+        Seguridad(const Seguridad&);
         Seguridad(std::string, std::string, std::string, double, std::string);
         std::string getTipo();
+        Seguridad* clonar() const override;
         
 
 };
