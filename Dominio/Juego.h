@@ -15,6 +15,7 @@ class Juego : public Software
 
         Juego* clonar() const override;
         virtual void visita(IVisitorSoftware*);
+        static bool verificarGenero(std::string );
 };
 
 

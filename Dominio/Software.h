@@ -15,6 +15,7 @@ class Software
         double precio;
 
     public:
+        const static std::string E, A;
         Software(const Software&);
         Software(std::string, std::string, std::string, double);
         std::string getNombre();

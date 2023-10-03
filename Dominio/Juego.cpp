@@ -16,4 +16,16 @@ Juego *Juego::clonar() const
 {
     return new Juego(*this);
 }
-void Juego::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};
+void Juego::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);}
+
+bool Juego::verificarGenero(std::string genero)
+{
+    for(int i=0; i<10;i++)
+    {
+        if(GENEROS[i] == genero)
+        {
+            return true;
+        }
+    }
+    return false;
+};

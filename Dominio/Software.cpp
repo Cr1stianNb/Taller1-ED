@@ -1,5 +1,10 @@
 #pragma once
 #include "Software.h"
+
+const std::string Software::E = "Everyone", Software::A = "Adult";
+
+
+
 Software::Software(const Software& otro)
 {
     this->nombre = otro.nombre;

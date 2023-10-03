@@ -25,50 +25,40 @@ bool logout();
 void mostrarMenuAdmin(string, string, Sistema*);
 void mostrarMenuUsuario(string, string, Sistema*);
 
-void agregarSoftware(string, string, Sistema*);
-void eliminarSoftware(string, string, Sistema*);
+void agregarSoftware(string, string, Sistema&);
+void eliminarSoftwareBiblioteca(string, string, Sistema*);
+void eliminarSoftwareSesion(string, string, Sistema*);
 void accederSoftware(string, string, Sistema*);
 void accederLog(string, string, Sistema*);
 
+
+void mostrarBiblioteca(Sistema*);
 
 int main()
 {
 
     Sistema* sistema = new Sistema();
-    
-
-    
     sistema->agregarAdmin("Cristian", "123", 20); 
     sistema->agregarUsuarioNormal("Manuel", "123", 10);
     sistema->agregarUsuarioNormal("Manuel", "123", 10);
     sistema->agregarUsuarioNormal("Manuel", "123", 10);
     sistema->agregarUsuarioNormal("Kaka", "123", 20); 
-
-  
     Software* soft = new Navegador("Mario", "un japo", "toda edad", 9219.2);
     Software* soft2 = soft->clonar();
-
     VisitorSoftware* visitor = new VisitorSoftware();
-
     soft->visita(visitor);
     cout << visitor->getTipoSoftware() << endl;
-
-
-
-
     sistema->agregarJuego("Mario", "Japo", "toda edad", 912.1, "Adventuras");
-
     cout << sistema->agregarSoftwareUsuario("Cristian", "123", "Mario") << endl;
     cout << sistema->agregarSoftwareUsuario("Cristian", "123", "qwe") << endl;
     cout << sistema->eliminarSoftwareUsuario("Cristian", "123", "Mario") << endl;
-    
-
     cout << sistema->getNombresSoftwares() << endl;
     
     
-
-
     
+    agregarSoftware("Cristian", "123", *sistema);
+    
+    cout << sistema->getNombresSoftwares() << endl;
 
     /*    
     bool flag = true;
@@ -147,11 +137,12 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
     while(true)
     {
         cout << "Administrador: " << nombre 
-        << endl << "1) Agregar Software" 
-        << endl << "2) Eliminar Software"  
-        << endl << "3) Acceder Software" 
-        << endl << "4) Acceder al log"
-        << endl << "5) Salir"
+        << endl << "1) Agregar Software " 
+        << endl << "2) Eliminar Software (Biblioteca General)"
+        << endl << "3) Eliminar Software de tus sesiones"   
+        << endl << "4) Acceder Software" 
+        << endl << "5) Acceder al log"
+        << endl << "6) Salir"
         << endl << "Escoge una opción: " ;
         int opc;
         cin >> opc;
@@ -159,22 +150,25 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
         switch (opc)
         {
         case 1:
-            agregarSoftware(nombre, clave, sistema);
+            agregarSoftware(nombre, clave, *sistema);
             break;
 
         case 2:
-            eliminarSoftware(nombre, clave, sistema);
+            eliminarSoftwareBiblioteca(nombre, clave, sistema);
             break;
-        
         case 3:
+            eliminarSoftwareSesion(nombre, clave, sistema);
+            break;
+        case 4:
             accederSoftware(nombre, clave, sistema);
             break;
         
-        case 4:
+        case 5:
             accederLog(nombre, clave, sistema);
             break;
         
-        case 5: 
+        case 6: 
+            cout << "Ha salido del menú administrador" << endl;
             return;
         default:
             cout << "Opción no válida" << endl;
@@ -199,11 +193,11 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
         switch (opc)
         {
         case 1:
-            agregarSoftware(nombre, clave, sistema);
+            agregarSoftware(nombre, clave, *sistema);
             break;
 
         case 2:
-            eliminarSoftware(nombre, clave, sistema);
+            eliminarSoftwareBiblioteca(nombre, clave, sistema);
             break;
         
         case 3:
@@ -221,11 +215,108 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
 };
 
 
-void agregarSoftware(string, string, Sistema*)
+void agregarSoftware(string nombre, string clave, Sistema& sistema)
+{
+    string nombreSoft;
+    cout << "Ingrese el nombre del software: " << endl;
+    cin >> nombreSoft;
+
+    string developer;
+    cout << "\nIngrese developer de " + nombreSoft + ": "<< endl;
+    cin >> developer;
+
+    int opcClasificacion;
+    string clasificacion;
+    cout << "\nIngrese clasificación de edad: " << endl
+    << "1) " + Software::E << endl
+    << "2) " + Software::A << endl
+    << "-Escoge una opción: ";
+    cin >> opcClasificacion;
+    switch(opcClasificacion)
+    {
+        case 1:
+            clasificacion = Software::E;
+            break;
+        case 2:
+            clasificacion = Software::A;
+            break;
+        default:
+            cout << "Opción no válida...\n se cancela agregación" << endl;
+            return;
+    }
+
+    double precio;
+    cout << "\nIngrese el precio del producto: " << endl;
+    cin >> precio;
+
+    int opcTipo;
+    string nuevoSoft;
+    cout << "Ingrese el tipo de software a ingresar: " << endl
+    << "1) " + VisitorSoftware::JUEGO << endl
+    << "2) " + VisitorSoftware::NAVEGADOR << endl
+    << "3) " + VisitorSoftware::OFIMATICA << endl
+    << "4) " + VisitorSoftware::PRODUCCION << endl
+    << "5) " + VisitorSoftware::SEGURIDAD << endl
+    << "6) " + VisitorSoftware::SOCIAL << endl
+    << "-Escoge una opción: ";
+    cin >> opcTipo;
+    string genero = " ";
+    bool a;
+    switch(opcTipo)
+    {
+        case 1:
+            while(!Juego::verificarGenero(genero))
+            {
+                cout << "Ingrese el género del Juego (1 de las siguientes opciones): " << endl << "("
+                << GENEROS[0] + " , " + GENEROS[1] + " , "
+                << GENEROS[2] + " , " + GENEROS[3] + " , "
+                << GENEROS[4] + " , " + GENEROS[5] + " , "
+                << GENEROS[6] + " , " + GENEROS[7] + " , "
+                << GENEROS[8] + " , " + GENEROS[9] << ")" << endl; 
+                cin >> genero;
+            }
+
+            a = sistema.agregarJuego(nombreSoft, developer, clasificacion, precio, genero);
+            cout << a; 
+
+            break;
+
+        case 2:
+            break;
+        
+        case 3:
+
+            break;
+
+        case 4:
+            break;
+
+        case 5:
+
+            break;
+        
+        case 6:
+
+            break;
+
+        default:
+            cout << "Opción incorrecta...\nSe cancela operación" << endl;
+            return;
+
+    };
+
+    
+    
+
+
+
+
+};
+void eliminarSoftwareBiblioteca(string, string, Sistema*)
 {
 
 };
-void eliminarSoftware(string, string, Sistema*)
+void eliminarSoftwareSesion(string, string, Sistema*)
 {
 
 };

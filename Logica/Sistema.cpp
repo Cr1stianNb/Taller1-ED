@@ -1,6 +1,6 @@
 #include "Sistema.h"
 #include "VisitorUsuario.h"
-
+#include "VisitorSoftware.h"
 #include "../Dominio/UsuarioMenor.h"
 #include "../Dominio/Administrador.h"
 #include "../Dominio/UsuarioMayor.h"
@@ -106,6 +106,7 @@ bool Sistema::agregarJuego(std::string nombre, std::string developer, std::strin
     if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Juego(nombre, developer, clasificacion, precio, genero);
     listaSoftwares->push_back(software);
+    cout << "ENtra";
     return true;
 
 };
@@ -144,6 +145,7 @@ bool Sistema::agregarSocial(std::string nombre, std::string developer, std::stri
     if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Social(nombre, developer, clasificacion, precio);
     listaSoftwares->push_back(software);
+    cout << "Entraaa";
     return true;
 };
 
@@ -196,11 +198,20 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
 string Sistema::getNombresSoftwares()
 {
     if(listaSoftwares->size() == 0) return "No hay aplicaciones en la bibliotecas \n";
+    VisitorSoftware* visitorSoft = new VisitorSoftware();
+    if(visitorSoft == nullptr) 
+    {
+        cout << "Algo raro pasa"; 
+    }
     string texto = "Listado de Softwares:\n";
     for(int i=0; i<listaSoftwares->size();i++)
     {
-        texto += " -" + listaSoftwares->at(i)->getNombre() + "\n" ;
+        Software* soft = listaSoftwares->at(i);
+        soft->visita(visitorSoft);
+        texto += " -Nombre: " +  soft->getNombre() +  " Tipo Software: " + visitorSoft->getTipoSoftware() + "\n" ;
+    
     }
+    delete visitorSoft;
     return texto;
 
 };
