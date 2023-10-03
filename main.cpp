@@ -52,6 +52,8 @@ int main()
     cout << sistema->agregarSoftwareUsuario("Cristian", "123", "qwe") << endl;
     cout << sistema->eliminarSoftwareUsuario("Cristian", "123", "Mario") << endl;
     
+
+    cout << sistema->getNombresSoftwares() << endl;
     
     
 

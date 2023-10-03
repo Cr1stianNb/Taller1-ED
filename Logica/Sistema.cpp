@@ -147,9 +147,6 @@ bool Sistema::agregarSocial(std::string nombre, std::string developer, std::stri
     return true;
 };
 
-
-
-
 bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
 {
     Usuario* usuario = getUsuario(nombre, clave);
@@ -193,4 +190,17 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
     if(software == nullptr) return false;
 
     return eliminarSoftwareSistema(software);
+};
+
+
+string Sistema::getNombresSoftwares()
+{
+    if(listaSoftwares->size() == 0) return "No hay aplicaciones en la bibliotecas \n";
+    string texto = "Listado de Softwares:\n";
+    for(int i=0; i<listaSoftwares->size();i++)
+    {
+        texto += " -" + listaSoftwares->at(i)->getNombre() + "\n" ;
+    }
+    return texto;
+
 };

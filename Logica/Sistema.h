@@ -33,6 +33,8 @@ class Sistema
         bool agregarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareBiblioteca(std::string);
+
+        std::string getNombresSoftwares();
     
         
 
