@@ -21,7 +21,9 @@ class Software
         std::string getNombre();
         std::string getDeveloper();
         std::string getClasificacion();
+        std::vector<Usuario*>* getListaUsuario();
         double getPrecio();
+
         bool agregarUsuario(Usuario*);
         Usuario* getUsuario(std::string);
 

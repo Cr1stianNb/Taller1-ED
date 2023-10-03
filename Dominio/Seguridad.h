@@ -3,20 +3,23 @@
 #include "Software.h"
 
 
-const std::string MALWARES[6] {"Ransomware", "Spyware", "botnets", "rootkits", "gusanos", "troyanos"};
+
 
 class Seguridad : public Software
 {
     private:
+        
         static std::string tiposMalware[];
         std::string tipo;
 
     public:
+        const static std::string RANSOMWARE, SPYWARE, BOTNETS, ROOTKITS, GUSANOS, TROYANOS;
         Seguridad(const Seguridad&);
         Seguridad(std::string, std::string, std::string, double, std::string);
         std::string getTipo();
         Seguridad* clonar() const override;
         virtual void visita(IVisitorSoftware*);
+        static bool verificarMalware(std::string);
 
 };
 

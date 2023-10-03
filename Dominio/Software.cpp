@@ -1,6 +1,7 @@
 #pragma once
 #include "Software.h"
 
+/// @brief 
 const std::string Software::E = "Everyone", Software::A = "Adult";
 
 
@@ -25,7 +26,11 @@ Software::Software(std::string nombre, std::string developer, std::string clasif
 
 std::string Software::getNombre(){return this->nombre;};
 std::string Software::getDeveloper(){return this->developer;};
-std::string Software::getClasificacion(){return this->clasificacion;};
+std::string Software::getClasificacion(){return this->clasificacion;}
+std::vector<Usuario*> *Software::getListaUsuario()
+{
+    return this->listaUsuario;
+};
 double Software::getPrecio(){return this->precio;}
 
 /*

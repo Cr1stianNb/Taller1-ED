@@ -34,7 +34,9 @@ class Sistema
         bool eliminarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareBiblioteca(std::string);
 
+        std::string getNombresSoftwaresUsuario(std::string, std::string);
         std::string getNombresSoftwares();
+        std::vector<std::string>* getNombresUsuariosSoftware(std::string);
     
         
 

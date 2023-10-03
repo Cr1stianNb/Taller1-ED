@@ -2,7 +2,7 @@
 
 Navegador::Navegador(const Navegador& otro): Software(otro.nombre, otro.developer, otro.clasificacion, otro.precio)
 {
-    this->contador = otro.precio;
+    this->contador = 0;
     this->historial = new vector<string>(0);
 };
 Navegador::Navegador(std::string nombre, std::string developer, std::string clasificacion, double precio):Software(nombre, developer, clasificacion, precio)

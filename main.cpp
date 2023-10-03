@@ -26,13 +26,13 @@ void mostrarMenuAdmin(string, string, Sistema*);
 void mostrarMenuUsuario(string, string, Sistema*);
 
 void agregarSoftware(string, string, Sistema&);
-void eliminarSoftwareBiblioteca(string, string, Sistema*);
-void eliminarSoftwareSesion(string, string, Sistema*);
-void accederSoftware(string, string, Sistema*);
-void accederLog(string, string, Sistema*);
+void eliminarSoftwareBiblioteca(string, string, Sistema&);
+void eliminarSoftwareSesion(string, string, Sistema&);
+void accederSoftware(string, string, Sistema&);
+void accederLog(string, string, Sistema&);
+bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
 
-
-void mostrarBiblioteca(Sistema*);
+void mostrarBiblioteca(Sistema&);
 
 int main()
 {
@@ -55,8 +55,8 @@ int main()
     cout << sistema->getNombresSoftwares() << endl;
     
     
-    
     agregarSoftware("Cristian", "123", *sistema);
+    eliminarSoftwareSesion("Cristian", "123", *sistema);
     
     cout << sistema->getNombresSoftwares() << endl;
 
@@ -154,17 +154,17 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
             break;
 
         case 2:
-            eliminarSoftwareBiblioteca(nombre, clave, sistema);
+            eliminarSoftwareBiblioteca(nombre, clave, *sistema);
             break;
         case 3:
-            eliminarSoftwareSesion(nombre, clave, sistema);
+            eliminarSoftwareSesion(nombre, clave, *sistema);
             break;
         case 4:
-            accederSoftware(nombre, clave, sistema);
+            accederSoftware(nombre, clave, *sistema);
             break;
         
         case 5:
-            accederLog(nombre, clave, sistema);
+            accederLog(nombre, clave, *sistema);
             break;
         
         case 6: 
@@ -197,11 +197,11 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
             break;
 
         case 2:
-            eliminarSoftwareBiblioteca(nombre, clave, sistema);
+            eliminarSoftwareBiblioteca(nombre, clave, *sistema);
             break;
         
         case 3:
-            accederSoftware(nombre, clave, sistema);
+            accederSoftware(nombre, clave, *sistema);
             break;
         case 4: 
             cout << "Ha salido del menú Usuario";
@@ -261,6 +261,8 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
     << "-Escoge una opción: ";
     cin >> opcTipo;
     string genero = " ";
+    string tipoSolucion = "";
+    string malware = "";
     bool a;
     switch(opcTipo)
     {
@@ -276,26 +278,99 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
                 cin >> genero;
             }
 
-            a = sistema.agregarJuego(nombreSoft, developer, clasificacion, precio, genero);
-            cout << a; 
-
+            if(sistema.agregarJuego(nombreSoft, developer, clasificacion, precio, genero))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
+    
             break;
 
         case 2:
+
+            if(sistema.agregarNavegador(nombreSoft, developer, clasificacion, precio))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
             break;
         
         case 3:
-
+            if(sistema.agregarOfimatica(nombreSoft, developer, clasificacion, precio))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
             break;
 
         case 4:
+            cout << "Advertencia: Al ser un software de tipo producción, la clasificación será de tipo A  (Adulto)" << endl;
+            while(!Produccion::verificarSolucion(tipoSolucion))
+            {
+                cout << "Ingrese el tipo de Solución del software (1 de las siguientes opciones): " << endl << "("
+                << Produccion::VIDEO + " , "
+                << Produccion::MUSICA + " , "
+                << Produccion::STREAMING + " , "
+                << Produccion::FOTOS + " ) "
+                << endl; 
+                cin >> tipoSolucion;
+            }
+            if(sistema.agregarProduccion(nombreSoft, developer, Software::A , precio, tipoSolucion))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
+
             break;
 
         case 5:
 
+            while(!Seguridad::verificarMalware(malware))
+            {
+                cout << "Ingrese el tipo de malware del software (1 de las siguientes opciones): " << endl << "("
+                << Seguridad::RANSOMWARE + " , "
+                << Seguridad::BOTNETS + " , "
+                << Seguridad::TROYANOS + " , "
+                << Seguridad::GUSANOS + " , "
+                << Seguridad::ROOTKITS + " , "
+                << Seguridad::SPYWARE + " )"
+                << endl; 
+                cin >> malware;
+            }
+            if(sistema.agregarProduccion(nombreSoft, developer, clasificacion , precio, malware))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
+
             break;
         
         case 6:
+
+            if(sistema.agregarSocial(nombreSoft, developer, clasificacion, precio))
+            {
+                cout << "Fue ingresado con éxito" << endl;
+            }
+            else 
+            {
+                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+            }
+            break;
 
             break;
 
@@ -304,27 +379,76 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             return;
 
     };
-
-    
-    
-
-
+};
+void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
+{
+    cout << "Ingrese el nombre del software a ELIMINAR en la Biblioteca: (Se pedira autorización si es que existe otro usuario utilizando la app)" << endl;
+    string nombreSoftware;
+    cin >> nombreSoftware;
+    vector<string>* listaUsuario = sistema.getNombresUsuariosSoftware(nombreSoftware);
+    if(listaUsuario == nullptr) cout << "El nombre del software no se encontro..." << endl;
+    else
+    {
+        if(verificarTodosLosUsuarios(listaUsuario, nombreSoftware))
+        {
+            cout << "Se eliminará el software  de la biblioteca general" + nombreSoftware << endl;
+        }
+        else 
+        {
+            cout  << " , no se elimino la Aplicación..." << endl;
+        }
+    }
 
 
 };
-void eliminarSoftwareBiblioteca(string, string, Sistema*)
+
+
+bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
+{
+    bool eliminar = true;
+    int opc = 0 ;
+    for(int i=0; i<listaUsuario->size();i++)
+    {
+        cout << "Nombre de Usuario: " << listaUsuario->at(i) << " ¿Deseas eliminar el software: " + nombreSoft + "?" 
+        << endl << "1) Si" << endl << "2) No" << endl << "Escoge una opción: ";
+        cin >> opc;
+
+        switch(opc)
+        {
+            case 1:
+                break;
+            case 2:
+                eliminar = false;
+                cout << "El usuario " << listaUsuario->at(i) << "Se negó a eliminar el software";
+                return eliminar;
+            default:
+                cout << "No se eliminará debido a una opción incorrecta..." << endl;
+                return false;
+        }
+    }
+    return eliminar;
+};
+void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
+{
+    string nombreSoft;
+    cout << sistema.getNombresSoftwaresUsuario(nombre, clave) << endl;
+    cout << "Ingresa el nombre del software a eliminar la sesión activa: " << endl;
+    cin >> nombreSoft;
+    bool estaEliminado = sistema.eliminarSoftwareUsuario(nombre, clave, nombreSoft);
+    if(estaEliminado) 
+    {
+        cout << "Se ha eliminado correctamente" << endl;
+    }
+    else
+    {
+        cout << "No se ha podido eliminar, nombre de programa no encontrado en tus sesiones..." << endl;
+    }
+};
+void accederSoftware(string, string, Sistema&)
 {
 
 };
-void eliminarSoftwareSesion(string, string, Sistema*)
-{
-
-};
-void accederSoftware(string, string, Sistema*)
-{
-
-};
-void accederLog(string, string, Sistema*)
+void accederLog(string, string, Sistema&)
 {
 
 };

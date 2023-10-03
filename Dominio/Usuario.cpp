@@ -15,7 +15,12 @@ Usuario::Usuario(const Usuario& otro): nombre(otro.nombre), clave(otro.clave), e
     this->listaSoftware = new std::vector<Software*>(0);
 };
 
-std::string Usuario::getNombre(){return this->nombre;};
+std::vector<Software *>* Usuario::getListaSoftware()
+{
+    return this->listaSoftware;
+}
+
+std::string Usuario::getNombre() { return this->nombre; };
 std::string Usuario::getClave(){return this->clave;};
 int Usuario::getEdad(){return this->edad;}
 

@@ -18,6 +18,8 @@ class Usuario
 
         Usuario(std::string, std::string, int);
         Usuario(const Usuario&);
+
+        std::vector<Software*>* getListaSoftware();
         std::string getNombre();
         std::string getClave();
         int getEdad();

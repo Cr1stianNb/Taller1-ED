@@ -194,15 +194,30 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
     return eliminarSoftwareSistema(software);
 };
 
+std::string Sistema::getNombresSoftwaresUsuario(std::string nombre, std::string clave)
+{
+    Usuario* usuario = getUsuario(nombre, clave);
+    string texto = "Listados de los Softwares que has iniciado sesión: \n";
+    if(usuario == nullptr) return std::string("Usuario " + nombre + " No se ha encontrado en el sistema...");
+
+    vector<Software*>* listaSoftware = usuario->getListaSoftware();
+    VisitorSoftware* visitorSoft = new VisitorSoftware();
+    for(int i=0; i<listaSoftware->size();i++)
+    {
+
+        listaSoftware->at(i)->visita(visitorSoft);
+        texto += "- " + listaSoftware->at(i)->getNombre() + " Tipo Software: " + visitorSoft->getTipoSoftware() + "\n";
+    }
+    delete visitorSoft;
+    return texto;
+    
+
+}
 
 string Sistema::getNombresSoftwares()
 {
     if(listaSoftwares->size() == 0) return "No hay aplicaciones en la bibliotecas \n";
     VisitorSoftware* visitorSoft = new VisitorSoftware();
-    if(visitorSoft == nullptr) 
-    {
-        cout << "Algo raro pasa"; 
-    }
     string texto = "Listado de Softwares:\n";
     for(int i=0; i<listaSoftwares->size();i++)
     {
@@ -213,5 +228,21 @@ string Sistema::getNombresSoftwares()
     }
     delete visitorSoft;
     return texto;
+
+}
+std::vector<string>* Sistema::getNombresUsuariosSoftware(std::string nombreSoftware)
+{
+    Software* software = getSoftware(nombreSoftware);
+    if(software == nullptr) return nullptr;
+
+    vector<string>* listaNombres = new vector<string>();
+    vector<Usuario*>* listaUsuarios = software->getListaUsuario();
+
+    for(int i=0; i<listaUsuarios->size();i++)
+    {
+        listaNombres->push_back(listaUsuarios->at(i)->getNombre());
+    }
+    return listaNombres;
+    
 
 };
