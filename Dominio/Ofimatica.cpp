@@ -23,4 +23,5 @@ bool Ofimatica::eliminarArchivo()
 Ofimatica *Ofimatica::clonar() const
 {
     return new Ofimatica(*this);
-};
+}
+void Ofimatica::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};

@@ -17,4 +17,5 @@ std::string Produccion::getTipoSolucion(){return this->tipoSolucion;}
 Produccion* Produccion::clonar() const
 {
     return new Produccion(*this);
-};
+}
+void Produccion::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};

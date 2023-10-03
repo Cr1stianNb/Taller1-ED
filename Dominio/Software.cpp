@@ -23,12 +23,12 @@ std::string Software::getDeveloper(){return this->developer;};
 std::string Software::getClasificacion(){return this->clasificacion;};
 double Software::getPrecio(){return this->precio;}
 
-
+/*
 Software *Software::clonar() const
 {
     return new Software(*this);
-}
-
+};
+*/
 
 bool Software::agregarUsuario(Usuario *usuario)
 {
@@ -48,3 +48,4 @@ Usuario *Software::getUsuario(std::string nombre)
     }
     return nullptr;
 };
+

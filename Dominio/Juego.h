@@ -1,5 +1,5 @@
-#ifndef JUEGO
-#define JUEGO
+#ifndef JUEGO_H
+#define JUEGO_H
 #include "Software.h"
 
 const std::string GENEROS[10] {"FPS", "MMO", "PUZZLE", "PLATAFORMERO", "RPG", "HORROR", "ESTRATEGIA", "DEPORTES", "ACCIÓN", "ADVENTURAS"};
@@ -14,6 +14,7 @@ class Juego : public Software
         std::string getGenero();
 
         Juego* clonar() const override;
+        virtual void visita(IVisitorSoftware*);
 };
 
 

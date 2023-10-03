@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Usuario.h"
+#include "../Logica/IVisitorSoftware.h"
 class Software 
 {
     
@@ -23,9 +24,9 @@ class Software
         bool agregarUsuario(Usuario*);
         Usuario* getUsuario(std::string);
 
-        virtual Software* clonar() const;
+        virtual Software* clonar() const = 0;
+        virtual void visita(IVisitorSoftware*) = 0;
 
-   
 
 };
 

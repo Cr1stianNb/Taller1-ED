@@ -1,5 +1,5 @@
-#ifndef SOCIAL
-#define SOCIAL
+#ifndef SOCIAL_H
+#define SOCIAL_H
 #include "Software.h"
 
 class Social : public Software
@@ -14,6 +14,7 @@ class Social : public Software
         bool agregarAmigo(std::string);
         bool eliminarAmigo(std::string);
         Social* clonar() const override;
+        virtual void visita(IVisitorSoftware*);
 
 };
 

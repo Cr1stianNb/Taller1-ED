@@ -1,5 +1,5 @@
-#ifndef OFIMATICA
-#define OFIMATICA
+#ifndef OFIMATICA_H
+#define OFIMATICA_H
 #include "Software.h"
 
 class Ofimatica : public Software
@@ -14,6 +14,7 @@ class Ofimatica : public Software
         bool agregarArchivo();
         bool eliminarArchivo();
         Ofimatica* clonar() const override;
+        virtual void visita(IVisitorSoftware*);
 };
 
 

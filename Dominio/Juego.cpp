@@ -15,4 +15,5 @@ std::string Juego::getGenero(){return this->genero;}
 Juego *Juego::clonar() const
 {
     return new Juego(*this);
-};
+}
+void Juego::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};

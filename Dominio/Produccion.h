@@ -1,5 +1,5 @@
-#ifndef PRODUCCION
-#define PRODUCCION
+#ifndef PRODUCCION_H
+#define PRODUCCION_H
 #include "Software.h"
 
 class Produccion : public Software
@@ -12,7 +12,7 @@ class Produccion : public Software
         Produccion(std::string , std::string, std::string, double , std::string);
         std::string getTipoSolucion();
         Produccion* clonar() const override;
-
+        virtual void visita(IVisitorSoftware*);
 };
 
 

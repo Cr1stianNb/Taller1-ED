@@ -82,7 +82,7 @@ int Sistema::getTipoUsuario(string nombre, string clave)
     if(us)
     {
         us->visita(visitadorUsuario);
-        bool n = dynamic_cast<UsuarioMenor*>(us) != nullptr;
+        //bool n = dynamic_cast<UsuarioMenor*>(us) != nullptr;
         tipo = visitadorUsuario->getTipo();
     }  
     delete visitadorUsuario;

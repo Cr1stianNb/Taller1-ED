@@ -25,4 +25,5 @@ std::string Navegador::getHistorial()
 Navegador* Navegador::clonar() const
 {
     return new Navegador(*this);
-};
+}
+void Navegador::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};

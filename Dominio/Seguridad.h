@@ -1,5 +1,5 @@
-#ifndef SEGURIDAD
-#define SEGURIDAD
+#ifndef SEGURIDAD_H
+#define SEGURIDAD_H
 #include "Software.h"
 
 
@@ -16,7 +16,7 @@ class Seguridad : public Software
         Seguridad(std::string, std::string, std::string, double, std::string);
         std::string getTipo();
         Seguridad* clonar() const override;
-        
+        virtual void visita(IVisitorSoftware*);
 
 };
 

@@ -15,4 +15,5 @@ std::string Seguridad::getTipo(){return this->tipo;};
 
 Seguridad* Seguridad::clonar() const {
     return new Seguridad(*this);
-};
+}
+void Seguridad::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};

@@ -8,6 +8,7 @@
 #include "Dominio/UsuarioMenor.cpp"
 #include "Dominio/UsuarioMayor.cpp"
 #include "Logica/VisitorUsuario.cpp"
+#include "Logica/VisitorSoftware.cpp"
 #include "Dominio/Navegador.cpp"
 #include "Dominio/Ofimatica.cpp"
 #include "Dominio/Produccion.cpp"
@@ -35,6 +36,7 @@ int main()
 
     Sistema* sistema = new Sistema();
     
+
     
     sistema->agregarAdmin("Cristian", "123", 20); 
     sistema->agregarUsuarioNormal("Manuel", "123", 10);
@@ -43,8 +45,16 @@ int main()
     sistema->agregarUsuarioNormal("Kaka", "123", 20); 
 
   
-    Software* soft = new Juego("Mario", "un japo", "toda edad", 9219.2, "Aventuras");
+    Software* soft = new Navegador("Mario", "un japo", "toda edad", 9219.2);
     Software* soft2 = soft->clonar();
+
+    VisitorSoftware* visitor = new VisitorSoftware();
+
+    soft->visita(visitor);
+    cout << visitor->getTipoSoftware() << endl;
+
+
+
 
     sistema->agregarJuego("Mario", "Japo", "toda edad", 912.1, "Adventuras");
 

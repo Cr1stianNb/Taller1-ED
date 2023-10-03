@@ -30,4 +30,5 @@ bool Social::eliminarAmigo(std::string nombreAmigo)
 Social *Social::clonar() const
 {
     return new Social(*this);
-};
+}
+void Social::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};
