@@ -29,8 +29,11 @@ void agregarSoftware(string, string, Sistema&);
 void eliminarSoftwareBiblioteca(string, string, Sistema&);
 void eliminarSoftwareSesion(string, string, Sistema&);
 void accederSoftware(string, string, Sistema&);
+void registrarSoftware(string, string, Sistema&);
 void accederLog(string, string, Sistema&);
 bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
+
+string* getNombreSoftware(Sistema&);
 
 void mostrarBiblioteca(Sistema&);
 
@@ -444,11 +447,76 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
         cout << "No se ha podido eliminar, nombre de programa no encontrado en tus sesiones..." << endl;
     }
 };
-void accederSoftware(string, string, Sistema&)
-{
 
+
+void registrarSoftware(string nombre, string clave , Sistema& sistema)
+{  
+    if(!sistema.verificarAcceso(nombre, clave)) return; //Si no se encuentra el usuario, no continuar
+
+    string nombreSoft;
+    do{ 
+    cout << "Registrar un software (Uno no existente en sus registros personales)" 
+    << endl << sistema.getNombresSoftwares()
+    << endl << "Ingrese el nombre del software a registrar: ";
+    cin >> nombreSoft;
+    }while( !sistema.existeSoftware(nombreSoft) && sistema.estaRegistroSoftware(nombre, clave, nombreSoft));// Verifica hasta que no se encuentre en sus registros
+            // mientras que no exista el software en la biblioteca y no este registrado en el usuario continuar
+
+    bool ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
+
+    if(ingresado)
+    {
+        cout << "Se ha registrado el software correctamente al usuario: " + nombre << endl;
+    }
+    else 
+    {
+        cout << "No se pudo ingresal el software al usuario..." << endl;
+    }
+};   
+
+
+
+void accederSoftware(string nombre , string clave, Sistema& sistema)
+{
+    string* nombreSoftware = getNombreSoftware(sistema);
+    if(nombreSoftware == nullptr) // Si no existen softwares en el sistema
+    {
+        cout << "No existen softwares en la biblioteca..., no puedes acceder porque no existen aplicaciones" << endl;
+        return;
+    }
+    else if(sistema.isEmptyRegistrosUsuario(nombre, clave)) // Si no tiene registros el usuario
+    {
+        cout << "No te has registrado a ninguna aplicación...no puedes acceder sin haber registrado aplicaciones previamente" << endl;
+        return;
+    }
+    while(!sistema.estaRegistroSoftware(nombre, clave, *nombreSoftware)) // Si escribio un software que no tiene registrado previamente
+    {
+        cout << sistema.getNombresSoftwaresUsuario(nombre, clave) << endl;
+        nombreSoftware = getNombreSoftware(sistema);
+    }
+    sistema.accederSoftware(nombre, clave, *nombreSoftware);
 };
-void accederLog(string, string, Sistema&)
+
+/**
+ * 
+ * retorna nulo si no existen aplicaciones en el sistema
+*/
+string* getNombreSoftware(Sistema& sistema)
+{
+    string nombreSoftware = "";
+    string *punteroNombre = &nombreSoftware;
+    if(sistema.isEmptySoftwares()) return nullptr;
+    do{
+    cout << sistema.getNombresSoftwares() 
+    << endl << "Ingrese el nombre del software a acceder: ";
+    cin >> nombreSoftware;
+    }while(sistema.existeSoftware(nombreSoftware));
+    return punteroNombre;
+}
+
+
+
+void accederLog(string nombre, string clave, Sistema& sistema)
 {
 
 };

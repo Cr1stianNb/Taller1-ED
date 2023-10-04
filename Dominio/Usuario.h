@@ -20,6 +20,7 @@ class Usuario
         Usuario(const Usuario&);
 
         std::vector<Software*>* getListaSoftware();
+        Software* getSoftware(std::string);
         std::string getNombre();
         std::string getClave();
         int getEdad();

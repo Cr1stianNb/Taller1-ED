@@ -70,8 +70,25 @@ Usuario* Sistema::getUsuario(string nombre, string clave)
 };
 bool Sistema::verificarAcceso(string nombreUs, string claveUs)
 {
-    if(this->getUsuario(nombreUs, claveUs)) return true;
+    if(this->getUsuario(nombreUs, claveUs) != nullptr) return true;
     cout <<  "Usuario o contraseña no se han encontrado, vuelva a intentarlo..." << endl;
+    return false;
+}
+bool Sistema::existeSoftware(std::string nombreSoftware)
+{
+    if(this->getSoftware(nombreSoftware) == nullptr) return false;
+    return true;
+};
+bool Sistema::estaRegistroSoftware(std::string nombreUs, std::string clave, std::string nombreSoft)
+{
+    Usuario* usuario = this->getUsuario(nombreUs, clave);
+    Software* software = this->getSoftware(nombreSoft); // conseguir el objeto software del sistema
+    if(usuario == nullptr) return false; // Si no existe el usuario retornar falso
+
+    Software* softwareUsuario = usuario->getSoftware(nombreSoft); // conseguir el objeto software de la persona
+
+    if(software != nullptr && softwareUsuario != nullptr) return true; // Si el software existe en la biblioteca , y tambien existe en el usuario entonces si esta registrado
+
     return false;
 };
 int Sistema::getTipoUsuario(string nombre, string clave)
@@ -148,7 +165,7 @@ bool Sistema::agregarSocial(std::string nombre, std::string developer, std::stri
     cout << "Entraaa";
     return true;
 };
-
+// Agregar un software copia al usuario 
 bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
 {
     Usuario* usuario = getUsuario(nombre, clave);
@@ -192,6 +209,11 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
     if(software == nullptr) return false;
 
     return eliminarSoftwareSistema(software);
+};
+
+void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)
+{
+
 };
 
 std::string Sistema::getNombresSoftwaresUsuario(std::string nombre, std::string clave)
@@ -245,4 +267,21 @@ std::vector<string>* Sistema::getNombresUsuariosSoftware(std::string nombreSoftw
     return listaNombres;
     
 
+};
+
+
+bool Sistema::isEmptySoftwares()
+{
+    return listaSoftwares->empty();
+};
+bool Sistema::isEmptyUsuarios()
+{
+    return listaUsuarios->empty();
+}
+bool Sistema::isEmptyRegistrosUsuario(std::string nombre, std::string clave)  
+{
+    Usuario* usuario = this->getUsuario(nombre, clave);
+    if(usuario == nullptr) return true;
+
+    return usuario->getListaSoftware()->empty();
 };

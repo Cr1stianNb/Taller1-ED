@@ -21,6 +21,11 @@ class Sistema
         bool agregarUsuarioNormal(std::string, std::string, int);
         // agregarsoft....
         bool verificarAcceso(std::string, std::string);
+        bool isEmptySoftwares();
+        bool isEmptyUsuarios();
+        bool isEmptyRegistrosUsuario(std::string, std::string);
+        bool existeSoftware(std::string);
+        bool estaRegistroSoftware(std::string,std::string,std::string);
         int getTipoUsuario(std::string, std::string);
         // Agregar Software a la lista
 
@@ -33,6 +38,8 @@ class Sistema
         bool agregarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareBiblioteca(std::string);
+
+        void accederSoftware(std::string, std::string, std::string);
 
         std::string getNombresSoftwaresUsuario(std::string, std::string);
         std::string getNombresSoftwares();

@@ -20,6 +20,18 @@ std::vector<Software *>* Usuario::getListaSoftware()
     return this->listaSoftware;
 }
 
+Software* Usuario::getSoftware(std::string nombreSoftware)
+{
+    for(int i=0; i<this->listaSoftware->size();i++)
+    {
+        if(listaSoftware->at(i)->getNombre() == nombreSoftware)
+        {
+            return listaSoftware->at(i);
+        }
+    }
+    return nullptr;
+}
+
 std::string Usuario::getNombre() { return this->nombre; };
 std::string Usuario::getClave(){return this->clave;};
 int Usuario::getEdad(){return this->edad;}
