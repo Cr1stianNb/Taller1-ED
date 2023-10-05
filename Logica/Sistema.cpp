@@ -9,6 +9,7 @@
 #include "../Dominio/Seguridad.h"
 #include "../Dominio/Social.h"
 #include "../Dominio/Navegador.h"
+#include "VisitorSesionSoftware.h"
 #include <iostream>
 using namespace std;
 
@@ -196,6 +197,7 @@ bool Sistema::eliminarSoftwareSistema(Software* software)
     {
         if(listaSoftwares->at(i)->getNombre() == software->getNombre())
         {
+            listaSoftwares->at(i)->eliminarAplicacionDeUsuarios();
             listaSoftwares->erase(listaSoftwares->begin() + i);
             return true;
         }
@@ -213,6 +215,18 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
 
 void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)
 {
+    Usuario* usuario = this->getUsuario(nombreUs, clave);
+    Software* software = usuario->getSoftware(nombreSoftware);
+
+    if(usuario == nullptr) return;
+    if(software == nullptr) return;
+
+    VisitorSesionSoftware* visitorSesion = new VisitorSesionSoftware(this);
+
+    
+
+
+
 
 };
 

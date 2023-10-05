@@ -11,8 +11,10 @@ class Navegador : public Software
         Navegador(const Navegador&);
         Navegador(std::string, std::string, std::string, double);
         std::string getHistorial();
+        void agregarPagina(std::string);
         Navegador* clonar() const override;
         virtual void visita(IVisitorSoftware*);
+        virtual void accederSesion(IVisitorSoftware*, Usuario*);
 };
 
 

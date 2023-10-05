@@ -15,6 +15,7 @@ class Ofimatica : public Software
         bool eliminarArchivo();
         Ofimatica* clonar() const override;
         virtual void visita(IVisitorSoftware*);
+        virtual void accederSesion(IVisitorSoftware*, Usuario*);
 };
 
 

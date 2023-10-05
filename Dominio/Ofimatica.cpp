@@ -17,11 +17,16 @@ bool Ofimatica::agregarArchivo()
 
 bool Ofimatica::eliminarArchivo()
 {
+    if(cantArchivos <= 0) return false;
     this->cantArchivos--;
-    return false;
+    return true;
 }
 Ofimatica *Ofimatica::clonar() const
 {
     return new Ofimatica(*this);
 }
-void Ofimatica::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};
+void Ofimatica::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this, nullptr);}
+void Ofimatica::accederSesion(IVisitorSoftware * visitorSoftware, Usuario * usuario)
+{
+    visitorSoftware->acepta(*this, usuario);
+};

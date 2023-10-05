@@ -19,6 +19,7 @@ class Seguridad : public Software
         std::string getTipo();
         Seguridad* clonar() const override;
         virtual void visita(IVisitorSoftware*);
+        virtual void accederSesion(IVisitorSoftware*, Usuario*);
         static bool verificarMalware(std::string);
 
 };

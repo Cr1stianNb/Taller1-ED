@@ -14,7 +14,9 @@ class Social : public Software
         bool agregarAmigo(std::string);
         bool eliminarAmigo(std::string);
         Social* clonar() const override;
-        virtual void visita(IVisitorSoftware*);
+
+        void visita(IVisitorSoftware*);
+        void accederSesion(IVisitorSoftware*, Usuario*);
 
 };
 

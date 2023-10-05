@@ -4,6 +4,8 @@
 #include <vector>
 #include "Usuario.h"
 #include "../Logica/IVisitorSoftware.h"
+#include <iostream>
+using namespace std;
 class Software 
 {
     
@@ -21,14 +23,17 @@ class Software
         std::string getNombre();
         std::string getDeveloper();
         std::string getClasificacion();
+
         std::vector<Usuario*>* getListaUsuario();
         double getPrecio();
 
+        void eliminarAplicacionDeUsuarios();
         bool agregarUsuario(Usuario*);
         Usuario* getUsuario(std::string);
 
         virtual Software* clonar() const = 0;
         virtual void visita(IVisitorSoftware*) = 0;
+        virtual void accederSesion(IVisitorSoftware*, Usuario*) = 0;
 
 
 };

@@ -18,12 +18,12 @@ class VisitorSoftware : public IVisitorSoftware
         static string SOCIAL;
         VisitorSoftware();
         ~VisitorSoftware();
-        virtual void acepta(Juego);
-        virtual void acepta(Navegador);
-        virtual void acepta(Ofimatica);
-        virtual void acepta(Produccion);
-        virtual void acepta(Seguridad);
-        virtual void acepta(Social);
+        virtual void acepta(Juego& , Usuario*);
+        virtual void acepta(Navegador& , Usuario*);
+        virtual void acepta(Ofimatica& , Usuario*);
+        virtual void acepta(Produccion& , Usuario*);
+        virtual void acepta(Seguridad& , Usuario*);
+        virtual void acepta(Social& , Usuario*);
         string getTipoSoftware();
 };
 

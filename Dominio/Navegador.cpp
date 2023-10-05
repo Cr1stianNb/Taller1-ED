@@ -20,10 +20,23 @@ std::string Navegador::getHistorial()
         text += "  " + this->historial->at(i);
     }
     return text;
+}
+void Navegador::agregarPagina(std::string pagina)
+{
+    if(this->historial->size() >= 10)
+    {
+        historial->erase(historial->begin());
+        historial->push_back(pagina);
+    }
+    else 
+    {
+        historial->push_back(pagina);
+    }
 };
 
 Navegador* Navegador::clonar() const
 {
     return new Navegador(*this);
 }
-void Navegador::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};
+void Navegador::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this, nullptr);}
+void Navegador::accederSesion(IVisitorSoftware * visitorSoftware, Usuario * usuario){*this, usuario;};

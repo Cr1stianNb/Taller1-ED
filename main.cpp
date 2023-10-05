@@ -9,6 +9,7 @@
 #include "Dominio/UsuarioMayor.cpp"
 #include "Logica/VisitorUsuario.cpp"
 #include "Logica/VisitorSoftware.cpp"
+#include "Logica/VisitorSesionSoftware.cpp"
 #include "Dominio/Navegador.cpp"
 #include "Dominio/Ofimatica.cpp"
 #include "Dominio/Produccion.cpp"
@@ -395,6 +396,7 @@ void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
         if(verificarTodosLosUsuarios(listaUsuario, nombreSoftware))
         {
             cout << "Se eliminará el software  de la biblioteca general" + nombreSoftware << endl;
+            sistema.eliminarSoftwareBiblioteca(nombreSoftware);
         }
         else 
         {

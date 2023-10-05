@@ -40,13 +40,23 @@ Software *Software::clonar() const
 };
 */
 
+void Software::eliminarAplicacionDeUsuarios()
+{
+
+    for(int i=0; i<this->listaUsuario->size();i++)
+    {
+        listaUsuario->at(i)->eliminarSoftware(this);
+    }
+
+};
+
 bool Software::agregarUsuario(Usuario *usuario)
 {
     Usuario* us = this->getUsuario(usuario->getNombre());
     if(us != nullptr) return false;
     listaUsuario->push_back(us);
     return true;
-}
+};
 Usuario *Software::getUsuario(std::string nombre)
 {
     for(int i=0; i<listaUsuario->size();i++)

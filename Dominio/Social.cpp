@@ -31,4 +31,10 @@ Social *Social::clonar() const
 {
     return new Social(*this);
 }
-void Social::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this);};
+void Social::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this, nullptr);}
+
+void Social::accederSesion(IVisitorSoftware* visitorSoftware, Usuario* usuario)
+{
+    visitorSoftware->acepta(*this, usuario);
+};
+
