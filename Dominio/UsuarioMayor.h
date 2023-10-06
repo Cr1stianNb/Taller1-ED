@@ -6,7 +6,7 @@ class UsuarioMayor : public Usuario
 {
 
     public:
-        UsuarioMayor(std::string, std::string, int);
+        UsuarioMayor(std::string, std::string, int, std::string);
         virtual void visita(IVisitor*);
 };
 

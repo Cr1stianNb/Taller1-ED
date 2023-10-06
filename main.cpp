@@ -19,7 +19,7 @@
 using namespace std;
 
 
-
+bool parseInt(string);
 
 void login(Sistema*);
 bool logout();
@@ -30,6 +30,8 @@ void agregarSoftware(string, string, Sistema&);
 void eliminarSoftwareBiblioteca(string, string, Sistema&);
 void eliminarSoftwareSesion(string, string, Sistema&);
 void accederSoftware(string, string, Sistema&);
+void agregarUsuario(string, string, Sistema&);
+bool eliminarUsuario(string, string, Sistema&);
 void registrarSoftware(string, string, Sistema&);
 void accederLog(string, string, Sistema&);
 bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
@@ -38,41 +40,46 @@ string* getNombreSoftware(Sistema&);
 
 void mostrarBiblioteca(Sistema&);
 
+
+
+
+bool parseInt(string algo)
+{
+    try
+    {
+        int numero = stoi(algo);
+        return true;
+    }
+    catch(const invalid_argument& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    catch(const out_of_range& e1)
+    {
+        std::cerr << e1.what() << "\n";
+    }
+    return false;
+    
+};
+
+
+
+
+
 int main()
 {
-
     Sistema* sistema = new Sistema();
-    sistema->agregarAdmin("Cristian", "123", 20); 
-    sistema->agregarUsuarioNormal("Manuel", "123", 10);
-    sistema->agregarUsuarioNormal("Manuel", "123", 10);
-    sistema->agregarUsuarioNormal("Manuel", "123", 10);
-    sistema->agregarUsuarioNormal("Kaka", "123", 20); 
-    Software* soft = new Navegador("Mario", "un japo", "toda edad", 9219.2);
-    Software* soft2 = soft->clonar();
-    VisitorSoftware* visitor = new VisitorSoftware();
-    soft->visita(visitor);
-    cout << visitor->getTipoSoftware() << endl;
-    sistema->agregarJuego("Mario", "Japo", "toda edad", 912.1, "Adventuras");
-    cout << sistema->agregarSoftwareUsuario("Cristian", "123", "Mario") << endl;
-    cout << sistema->agregarSoftwareUsuario("Cristian", "123", "qwe") << endl;
-    cout << sistema->eliminarSoftwareUsuario("Cristian", "123", "Mario") << endl;
-    cout << sistema->getNombresSoftwares() << endl;
-    
-    
-    agregarSoftware("Cristian", "123", *sistema);
-    eliminarSoftwareSesion("Cristian", "123", *sistema);
-    
-    cout << sistema->getNombresSoftwares() << endl;
-
-    /*    
     bool flag = true;
-    while(flag)
+    bool isEmptyUsuario = sistema->isEmptyUsuarios(); // No se ingresará al sistema sin haber usuarios previamente, para evitar errores.
+    while(flag && !isEmptyUsuario) 
     {
         login(sistema);
         flag = logout();
     }
-    
-    */
+    if(isEmptyUsuario)
+    {
+        cout << "No tienes a ningún usuario en el sistema." << endl;
+    }
     return 0;
 }
 
@@ -88,7 +95,7 @@ void login(Sistema*sistema)
         cin >> nombre;
         cout << "Ingrese la clave: ";
         cin >> clave;
-    } while (sistema->verificarAcceso(nombre, clave));
+    } while (!sistema->verificarAcceso(nombre, clave));
     
     int tipoUsuario = sistema->getTipoUsuario(nombre, clave);
 
@@ -141,37 +148,50 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
     while(true)
     {
         cout << "Administrador: " << nombre 
-        << endl << "1) Agregar Software " 
-        << endl << "2) Eliminar Software (Biblioteca General)"
-        << endl << "3) Eliminar Software de tus sesiones"   
-        << endl << "4) Acceder Software" 
-        << endl << "5) Acceder al log"
-        << endl << "6) Salir"
+        << endl << "1) Agregar Software (Biblioteca General) "
+        << endl << "2) Registrar Software (Sesión personal)" 
+        << endl << "3) Eliminar Software (Biblioteca General)"
+        << endl << "4) Eliminar Software de tus sesiones"   
+        << endl << "5) Agregar Usuario "
+        << endl << "6) Eliminar Usuario " 
+        << endl << "7) Acceder Software" 
+        << endl << "8) Acceder al log"
+        << endl << "9) Salir"
         << endl << "Escoge una opción: " ;
         int opc;
         cin >> opc;
-
+        bool seElimino;
         switch (opc)
         {
         case 1:
             agregarSoftware(nombre, clave, *sistema);
             break;
-
         case 2:
+            registrarSoftware(nombre, clave, *sistema);
+            break;
+
+        case 3:
             eliminarSoftwareBiblioteca(nombre, clave, *sistema);
             break;
-        case 3:
+        case 4:
             eliminarSoftwareSesion(nombre, clave, *sistema);
             break;
-        case 4:
+        case 5:
+            agregarUsuario(nombre, clave, *sistema);
+            break;
+        case 6:
+            seElimino = eliminarUsuario(nombre, clave, *sistema);
+            if(seElimino) return;
+            break;
+        case 7:
             accederSoftware(nombre, clave, *sistema);
             break;
         
-        case 5:
+        case 8:
             accederLog(nombre, clave, *sistema);
             break;
         
-        case 6: 
+        case 9: 
             cout << "Ha salido del menú administrador" << endl;
             return;
         default:
@@ -186,10 +206,12 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
     while(true)
     {
         cout << "Usuario: " << nombre 
-        << endl << "1) Agregar Software" 
-        << endl << "2) Eliminar Software"  
-        << endl << "3) Acceder Software" 
-        << endl << "4) Salir"
+        << endl << "1) Agregar Software  (Biblioteca General)"
+        << endl << "2)  Registrar Software (Uso Personal)" 
+        << endl << "3) Eliminar Software (Biblioteca General)"
+        << endl << "4) Eliminar Software de tus sesiones"
+        << endl << "5) Acceder Software"    
+        << endl << "6) Salir"
         << endl << "Escoge una opción: " ;
         int opc;
         cin >> opc;
@@ -199,15 +221,22 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
         case 1:
             agregarSoftware(nombre, clave, *sistema);
             break;
-
+        
         case 2:
+            registrarSoftware(nombre, clave, *sistema);
+            break;
+
+        case 3:
             eliminarSoftwareBiblioteca(nombre, clave, *sistema);
             break;
         
-        case 3:
+        case 4:
+            eliminarSoftwareSesion(nombre, clave, *sistema);
+            break;
+        case 5:
             accederSoftware(nombre, clave, *sistema);
             break;
-        case 4: 
+        case 6: 
             cout << "Ha salido del menú Usuario";
             return;
         default:
@@ -218,6 +247,98 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
     }
 };
 
+
+void agregarUsuario(string nombre, string clave, Sistema& sistema)
+{
+    string nombreUsuario;
+    cout << "Ingrese el nombre del Usuario: " << endl;
+    cin >> nombreUsuario;
+
+    int edad;
+    string stringEdad;
+    cout << "Ingrese la edad del usuario: " << endl;
+    cin >> edad;
+
+    while(!parseInt(stringEdad) || stoi(stringEdad) < 6)
+    {
+        cout << "Opción incorrecta, (6 < edad)";
+        cout << "Ingrese la edad del usuario: " << endl;
+        cin >> stringEdad;
+    }
+
+    string claveNuevo;
+    cout << "Ingrese la clave del usuario: " << endl;
+    cin >> claveNuevo;
+
+    string correo = "";
+    if(edad > 18)
+    {  
+        cout << "Ingrese el correo del usuario: " << endl;
+        cin >> correo;
+    }
+
+    string tipoUsuario;
+    int opcTipo;
+    do
+    {
+        cout << "Ingrese tipo de Usuario: " 
+        << endl << "1) Normal"
+        << endl << "2) Admin"
+        << endl << "Escoga una opción: " << endl;
+        cin >> opcTipo;
+    }  while(opcTipo != 1 && opcTipo != 2);
+
+    switch (opcTipo)
+    {
+    case 1:
+        
+        sistema.agregarAdmin(nombreUsuario, claveNuevo, edad, correo);
+        break;
+
+    case 2:
+        sistema.agregarUsuarioNormal(nombreUsuario, claveNuevo, edad, correo);
+        break;
+    
+    default:
+        cout << "Opción no encontrada" << endl;
+        break;
+    }
+
+
+
+
+};
+
+
+bool eliminarUsuario(string nombre, string clave, Sistema& sistema)
+{
+    bool esEl = false;
+    cout << "Ingrese el nombre del usuario a eliminar: " << endl;
+    string nombreUsuario;
+    cin >> nombreUsuario;
+
+    if(nombre == nombreUsuario)
+    {
+        esEl = true;
+    }
+
+    bool eliminar = sistema.eliminarUsuario(nombreUsuario);
+
+    if(eliminar)
+    {
+        cout << "Se elimino correctamente " << endl;
+    }
+    else 
+    {
+        cout << "No se pudo eliminar el usuario, debido a que no se encontro un usuario con nombre: " + nombreUsuario << endl;
+    }
+
+    return esEl;
+
+    
+
+
+};
 
 void agregarSoftware(string nombre, string clave, Sistema& sistema)
 {
@@ -437,7 +558,7 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
 {
     string nombreSoft;
     cout << sistema.getNombresSoftwaresUsuario(nombre, clave) << endl;
-    cout << "Ingresa el nombre del software a eliminar la sesión activa: " << endl;
+    cout << "Ingresa el nombre del software a eliminar de la sesión activa: " << endl;
     cin >> nombreSoft;
     bool estaEliminado = sistema.eliminarSoftwareUsuario(nombre, clave, nombreSoft);
     if(estaEliminado) 

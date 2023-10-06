@@ -12,11 +12,12 @@ class Usuario
         std::string nombre;
         std::string clave;
         int edad;
+        std::string correo;
         std::vector<Software*>* listaSoftware;
     public:
         const static int ADMINISTRADOR=1, USUARIO_MAYOR=2, USUARIO_MENOR=3;
 
-        Usuario(std::string, std::string, int);
+        Usuario(std::string, std::string, int, std::string);
         Usuario(const Usuario&);
 
         std::vector<Software*>* getListaSoftware();

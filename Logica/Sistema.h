@@ -16,8 +16,8 @@ class Sistema
     public:
         Sistema();
         void mostrarUsuarios();
-        bool agregarAdmin(std::string, std::string, int);
-        bool agregarUsuarioNormal(std::string, std::string, int);
+        bool agregarAdmin(std::string, std::string, int, std::string);
+        bool agregarUsuarioNormal(std::string, std::string, int, std::string);
 
           
         Usuario* getUsuario(std::string, std::string);
@@ -42,7 +42,9 @@ class Sistema
         bool agregarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareUsuario(std::string, std::string, std::string);
         bool eliminarSoftwareBiblioteca(std::string);
-
+        bool eliminarUsuario(std::string);
+        
+        void eliminarSesionesDeUsuarios(std::string);
         void accederSoftware(std::string, std::string, std::string);
 
         int getEdadUsuario(std::string);

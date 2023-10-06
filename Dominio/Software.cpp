@@ -33,6 +33,19 @@ std::vector<Usuario*> *Software::getListaUsuario()
 };
 double Software::getPrecio(){return this->precio;}
 
+bool Software::eliminarUsuario(std::string nombreUsuario)
+{
+    for(int i=0; i< listaUsuario->size();i++)
+    {
+        if(listaUsuario->at(i)->getNombre() == nombreUsuario)
+        {
+            listaUsuario->erase(listaUsuario->begin() + i);
+            return true;
+        }
+    }
+    return false;
+};
+
 /*
 Software *Software::clonar() const
 {

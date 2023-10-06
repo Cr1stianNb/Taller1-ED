@@ -32,15 +32,15 @@ void Sistema::mostrarUsuarios()
 
 
 // no se permite usuarios con el mismo nombre
-bool Sistema::agregarAdmin(string nombre, string clave, int edad)
+bool Sistema::agregarAdmin(string nombre, string clave, int edad, std::string correo)
 {
     if(this->getUsuario(nombre, clave) != nullptr) return false;
 
-    Usuario* admin = new Administrador(nombre, clave, edad);
+    Usuario* admin = new Administrador(nombre, clave, edad, correo);
     this->listaUsuarios->push_back(admin);
     return true;
 };
-bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad)
+bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad, std::string correo)
 {
     if(this->getUsuario(nombre, clave) != nullptr) return false; 
 
@@ -51,7 +51,7 @@ bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int ed
     }
     else
     {
-        us = new UsuarioMayor(nombre, clave, edad);
+        us = new UsuarioMayor(nombre, clave, edad, correo);
     }
   
     this->listaUsuarios->push_back(us);
@@ -173,19 +173,25 @@ bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std:
     if(usuario == nullptr) return false;
     if(software == nullptr) return false;
 
-    software->agregarUsuario(usuario);
-    Software* soft = software->clonar();
-    usuario->agregarSoftware(soft);
-    return true;
+    bool noExiste = software->agregarUsuario(usuario);
+    if(noExiste) 
+    {
+        Software* soft = software->clonar();
+        usuario->agregarSoftware(soft);
+        return true;
+    }
+    return false;
+   
 
 };
 bool Sistema::eliminarSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
 {
-    if(getUsuario(nombre, clave) == nullptr) return false;
-    if(getSoftware(nombreSoftware) == nullptr) return false;
-
+    
     Usuario* us = this->getUsuario(nombre, clave);
     Software* soft = this->getSoftware(nombreSoftware);
+    if(us == nullptr) return false;
+    if(soft == nullptr) return false;
+
     return us->eliminarSoftware(soft);
 }
 
@@ -210,6 +216,27 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
     if(software == nullptr) return false;
 
     return eliminarSoftwareSistema(software);
+}
+bool Sistema::eliminarUsuario(std::string nombreUsuario)
+{
+    for(int i=0; i<listaUsuarios->size();i++)
+    {
+        if(nombreUsuario == listaUsuarios->at(i)->getNombre())
+        {
+            eliminarSesionesDeUsuarios(nombreUsuario);
+            listaUsuarios->erase(listaUsuarios->begin() + i);
+            return true;
+        }
+    }
+    return false;
+};
+
+void Sistema::eliminarSesionesDeUsuarios(std::string nombreUsuario)
+{
+    for(int i=0; i<listaSoftwares->size();i++)
+    {
+        listaSoftwares->at(i)->eliminarUsuario(nombreUsuario);
+    }
 };
 
 void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)

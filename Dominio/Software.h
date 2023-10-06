@@ -26,7 +26,7 @@ class Software
 
         std::vector<Usuario*>* getListaUsuario();
         double getPrecio();
-
+        bool eliminarUsuario(std::string);
         void eliminarAplicacionDeUsuarios();
         bool agregarUsuario(Usuario*);
         Usuario* getUsuario(std::string);

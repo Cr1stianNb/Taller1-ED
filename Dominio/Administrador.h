@@ -8,7 +8,7 @@ class Administrador : public Usuario
         bool accesoLog;
 
     public:
-        Administrador(std::string, std::string, int);
+        Administrador(std::string, std::string, int, std::string);
         virtual void visita(IVisitor*);
 };
 
