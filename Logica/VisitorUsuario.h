@@ -10,6 +10,7 @@ class UsuarioMayor;
 
 /**
  * @class VisitorUsuario
+ * Clase que se encargara de visitar a los Usuarios y sus clases derivadas
 */
 class VisitorUsuario : public IVisitor
 {

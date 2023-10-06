@@ -12,14 +12,26 @@
 using namespace std;
 
 class Sistema;
-
+/**
+ * @class VisitorSesionSoftware
+ * Clase que se encargara de abrir sesión con un software y un usuario determinado
+ * implementa la interfaz 'IVisitorSoftware'
+*/
 class VisitorSesionSoftware : public IVisitorSoftware
 {
     private:
-        Sistema* sistema;
+        Sistema* sistema; // Tiene un puntero de referencia al sistema
     public:
+        /**
+         * Constructor de la clase 
+         * @param Sistema puntero de referencia al sistema, se necesitaran del sistema para  algunos acciones
+        */
         VisitorSesionSoftware(Sistema*);
+        /**
+         * Destructor de la Clase
+        */
         ~VisitorSesionSoftware();
+        
         virtual void acepta(Juego&, Usuario*);
         virtual void acepta(Navegador&, Usuario*);
         virtual void acepta(Ofimatica&, Usuario*);

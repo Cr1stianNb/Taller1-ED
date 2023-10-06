@@ -4,17 +4,20 @@
 #include "../Dominio/Usuario.h"
 #include "../Dominio/Software.h"
 
-
+/**
+ * @class Clase que implementa todos los métodos para que el programa cumpla con los requerimientos
+ * Contiene a todos los usuarios y softwares
+*/
 class Sistema
 {
     private:
-        std::vector<Usuario*>* listaUsuarios;
-        std::vector<Software*>* listaSoftwares;
-
-      ;
-
+        std::vector<Usuario*>* listaUsuarios; // Lista de punteros de usuarios
+        std::vector<Software*>* listaSoftwares; // Lista de punteros de softwares
     public:
+        // Constructor de la clase Sistema
         Sistema();
+        // Destructor de la clase Sistema
+        ~Sistema();
         void mostrarUsuarios();
         bool agregarAdmin(std::string, std::string, int, std::string);
         bool agregarUsuarioNormal(std::string, std::string, int, std::string);

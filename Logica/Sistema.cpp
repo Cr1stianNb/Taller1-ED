@@ -20,6 +20,7 @@ Sistema::Sistema()
     this->listaSoftwares = new vector<Software*>(0);
 };
 
+Sistema::~Sistema(){};
 
 void Sistema::mostrarUsuarios()
 {
