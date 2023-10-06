@@ -28,7 +28,7 @@ std::string Seguridad::getInforme(Usuario* usuario)
     {
         Software* software = listaSoftware->at(i);
         software->visita(visitor);
-        if(visitor->getTipoSoftware() == VisitorSoftware::SOCIAL)
+        if(visitor->getTipoSoftware() == VisitorSoftware::SOCIAL) 
         {
             Seguridad* seg = dynamic_cast<Seguridad*>(software);
             if(seg->getTipo() == this->tipo)
