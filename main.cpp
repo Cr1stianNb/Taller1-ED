@@ -20,12 +20,10 @@ using namespace std;
 
 
 bool parseInt(string);
-
 void login(Sistema*);
 bool logout();
 void mostrarMenuAdmin(string, string, Sistema*);
 void mostrarMenuUsuario(string, string, Sistema*);
-
 void agregarSoftware(string, string, Sistema&);
 void eliminarSoftwareBiblioteca(string, string, Sistema&);
 void eliminarSoftwareSesion(string, string, Sistema&);
@@ -35,14 +33,17 @@ bool eliminarUsuario(string, string, Sistema&);
 void registrarSoftware(string, string, Sistema&);
 void accederLog(string, string, Sistema&);
 bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
-
 string* getNombreSoftware(Sistema&);
-
 void mostrarBiblioteca(Sistema&);
 
 
 
-
+/**
+ * ParseInt(): intenta transformar un string en int,
+ * @param algo, string a verificar
+ * @return true si se puede transformar
+ * false caso contrario
+*/
 bool parseInt(string algo)
 {
     try
@@ -64,8 +65,9 @@ bool parseInt(string algo)
 
 
 
-
-
+/**
+Función main
+*/
 int main()
 {
     Sistema* sistema = new Sistema();
@@ -83,7 +85,11 @@ int main()
     return 0;
 }
 
-
+/**
+ * 
+ * Función Login: Se encarga de verificar el acceso por teclado y mostrar los menús a los usuarios
+ * @param sistema -> Se encarga administrar los procesos necesarios para la correcta funcionalidad de los menús
+*/
 void login(Sistema*sistema)
 {
     cout << "Bienvenido al programa: Manejos Software" << endl;
@@ -95,9 +101,9 @@ void login(Sistema*sistema)
         cin >> nombre;
         cout << "Ingrese la clave: ";
         cin >> clave;
-    } while (!sistema->verificarAcceso(nombre, clave));
+    } while (!sistema->verificarAcceso(nombre, clave));  // hasta que el usuario se encuentra
     
-    int tipoUsuario = sistema->getTipoUsuario(nombre, clave);
+    int tipoUsuario = sistema->getTipoUsuario(nombre, clave); 
 
     switch(tipoUsuario)
     {
@@ -119,6 +125,10 @@ void login(Sistema*sistema)
     cout << "Ha salido del programa con el usuario: " << nombre << " ...";
 };
 
+/**
+ * Logout: Función que se encarga de verificar si el usuario quiere seguir en el programa o cambiar de sesión
+ * @return true si quiere cambiar de usuario, false si desea salir del programa
+*/
 bool logout()
 {
     do
@@ -142,7 +152,12 @@ bool logout()
     }while(true);
 };
 
-
+/**
+ * Muestra el menú admin.
+ * @param nombre El nombre del usuario que inicio sesión
+ * @param clave la clave del usuario que inicio sesión
+ * @param sistema contiene la lógica para cumplir los requerimientos
+*/
 void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
 {
     while(true)
@@ -201,6 +216,14 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
  
     }
 };
+
+/**
+ * Muestra el menú para los usuarios normales, ya sea mayor o menor de edad, ya que, son otras clases que verificarán la edad
+ * Contiene menos opciones que el menú administrador
+ * @param nombre nombre del usuario que inicio sesión
+ * @param clave clave del usuario que inicio sesión
+ * @param sistema administra la lógica para cumplir los requerimientos del menú
+*/
 void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
 {
     while(true)
@@ -247,7 +270,13 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
     }
 };
 
-
+/**
+ * AgregarUsuario:
+ * Agrega un usuario a la biblioteca (sistema)
+ * @param nombre nombre del usuario que inicio sesión
+ * @param clave clave del usuario que inicio sesión
+ * @param sistema clase que implementa la lógica del programa
+*/
 void agregarUsuario(string nombre, string clave, Sistema& sistema)
 {
     string nombreUsuario;
@@ -303,13 +332,16 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
         cout << "Opción no encontrada" << endl;
         break;
     }
-
-
-
-
 };
 
-
+/**
+ * Elimina un usuario de la biblioteca general
+ * @param nombre Usuario que inicio sesión
+ * @param clave clave del usuario
+ * @param sistema clase que implementa la lógica
+ * @return true si el usuario que se elimino es el mismo quien inicio sesión, es debido a que si se elimino el usuario es necesario que se deslogee automaticamente
+ * false si es otro usuario
+*/
 bool eliminarUsuario(string nombre, string clave, Sistema& sistema)
 {
     bool esEl = false;
@@ -334,13 +366,17 @@ bool eliminarUsuario(string nombre, string clave, Sistema& sistema)
     }
 
     return esEl;
-
-    
-
-
 };
 
+/**
+ * AgregarSoftware: Agrega un software a la biblioteca general 
+ * @param nombre nombre del usuario que inicio sesión
+ * @param clave clave del usuario
+ * @param sistema clase que implementa la lógica
+ * 
+*/
 void agregarSoftware(string nombre, string clave, Sistema& sistema)
+
 {
     string nombreSoft;
     cout << "Ingrese el nombre del software: " << endl;
@@ -505,6 +541,13 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 
     };
 };
+
+/**
+ * EliminarSoftwareBiblioteca: Elimina un software de la biblioteca general
+ * @param nombre nombre del usuario que inicio sesión
+ * @param clave clave del usuario
+ * @param sistema clase que implementa la lógica del programa
+*/
 void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
 {
     cout << "Ingrese el nombre del software a ELIMINAR en la Biblioteca: (Se pedira autorización si es que existe otro usuario utilizando la app)" << endl;
@@ -528,7 +571,12 @@ void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
 
 };
 
-
+/**
+ * verificarTodosLosUsuarios: Verifica a todos los usuarios que utilizan determinado software , si quieren eliminar al software
+ * @param listaUsuario la lista de nombres de los usuarios en el sistema
+ * @param nombreSoft nombre del software a eliminar
+ * @return true si todos los usuarios quieren eliminar el software, false si al menos uno no desea eliminarlo
+*/
 bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
 {
     bool eliminar = true;
@@ -554,6 +602,13 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
     }
     return eliminar;
 };
+
+/**
+ * eliminarSoftwareSesion: Elimina un software (copia) en los registros de un usuario determinado
+ * @param nombre nombre del usuario 
+ * @param clave clave del usuario que desea eliminar un registro de un software
+ * @param sistema clase que implementa la lógica
+*/
 void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
 {
     string nombreSoft;
@@ -571,7 +626,12 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
     }
 };
 
-
+/**
+ * registrarSoftware:  usuario registra un software a sus accesos (copias de softwares)
+ * @param nombre nombre del usuario
+ * @param clave clave del usuario
+ * @param sistema clase que implementa la lógica
+*/
 void registrarSoftware(string nombre, string clave , Sistema& sistema)
 {  
     if(!sistema.verificarAcceso(nombre, clave)) return; //Si no se encuentra el usuario, no continuar
@@ -598,7 +658,15 @@ void registrarSoftware(string nombre, string clave , Sistema& sistema)
 };   
 
 
-
+/**
+ * accederSoftware: Usuario accede a uno de sus registros (copias creadas anteriormente)
+ * @param nombre nombre del usuario que desea acceder
+ * @param clave clave del usuario
+ * @param sistema instancia que implementa la lógica
+ * 
+ * Si el usuario no tiene registros, no se accede a ningún software
+ * Si la biblioteca no tiene software no se accederá al método
+*/
 void accederSoftware(string nombre , string clave, Sistema& sistema)
 {
     string* nombreSoftware = getNombreSoftware(sistema);
@@ -621,8 +689,11 @@ void accederSoftware(string nombre , string clave, Sistema& sistema)
 };
 
 /**
+ * getNombreSoftware: obtiene el nombre del software, pregunta por entrada al usuario
  * 
- * retorna nulo si no existen aplicaciones en el sistema
+ * @param sistema instancia que implementa la lógica
+ * @return string*, el nombre del software, nullptr si no 
+ * retorna nullptr si no existe ningún software en la biblioteca
 */
 string* getNombreSoftware(Sistema& sistema)
 {
@@ -630,14 +701,12 @@ string* getNombreSoftware(Sistema& sistema)
     string *punteroNombre = &nombreSoftware;
     if(sistema.isEmptySoftwares()) return nullptr;
     do{
-    cout << sistema.getNombresSoftwares() 
+    cout << sistema.getNombresSoftwares() // Muestra todos los nombres de softwares existentes
     << endl << "Ingrese el nombre del software a acceder: ";
     cin >> nombreSoftware;
     }while(sistema.existeSoftware(nombreSoftware));
     return punteroNombre;
 }
-
-
 
 void accederLog(string nombre, string clave, Sistema& sistema)
 {
