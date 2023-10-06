@@ -67,7 +67,7 @@ bool Software::agregarUsuario(Usuario *usuario)
 {
     Usuario* us = this->getUsuario(usuario->getNombre());
     if(us != nullptr) return false;
-    listaUsuario->push_back(us);
+    if(us == usuario) return false;
     return true;
 };
 Usuario *Software::getUsuario(std::string nombre)

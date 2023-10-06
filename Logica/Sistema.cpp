@@ -86,7 +86,8 @@ bool Sistema::estaRegistroSoftware(std::string nombreUs, std::string clave, std:
     Usuario* usuario = this->getUsuario(nombreUs, clave);
     Software* software = this->getSoftware(nombreSoft); // conseguir el objeto software del sistema
     if(usuario == nullptr) return false; // Si no existe el usuario retornar falso
-
+    if(software == nullptr) return false;
+    cout << software->getNombre();
     Software* softwareUsuario = usuario->getSoftware(nombreSoft); // conseguir el objeto software de la persona
 
     if(software != nullptr && softwareUsuario != nullptr) return true; // Si el software existe en la biblioteca , y tambien existe en el usuario entonces si esta registrado
@@ -244,11 +245,12 @@ void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::stri
 {
     Usuario* usuario = this->getUsuario(nombreUs, clave);
     Software* copiaSoftware = usuario->getSoftware(nombreSoftware);
-
+    cout << "Pasa por aca" << endl;
     if(usuario == nullptr) return;
     if(copiaSoftware == nullptr) return;
 
     VisitorSesionSoftware* visitorSesion = new VisitorSesionSoftware(this);
+    cout << "Todo bien por aca" << endl;
     copiaSoftware->accederSesion(visitorSesion, usuario);
 
 };
@@ -330,8 +332,17 @@ std::vector<string>* Sistema::getNombresUsuariosSoftware(std::string nombreSoftw
     return listaNombres;
     
 
-};
+}
+bool Sistema::tieneTodo(string nombre, string clave)
+{
+    if(this->getUsuario(nombre, clave) != nullptr) return false;
 
+    if(this->getUsuario(nombre, clave)->getListaSoftware()->size() >= listaSoftwares->size())
+    {
+        return true;
+    }
+    return false;
+};
 
 bool Sistema::isEmptySoftwares()
 {

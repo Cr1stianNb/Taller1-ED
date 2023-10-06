@@ -246,6 +246,9 @@ class Sistema
          * @return vector de string con los nombres de los usuarios
         */
         std::vector<std::string>* getNombresUsuariosSoftware(std::string);
+
+        /** Verifica si el usuario tiene todos los registros*/
+        bool tieneTodo(string, string);
 };
 
 #endif

@@ -36,7 +36,7 @@ void VisitorSesionSoftware::acepta(Juego &juego, Usuario *usuario)
     switch (opc)
     {
     case 1:
-        cout << "Las horas que has jugado son...." << juego.getHorasJugadas() << "nada mal" << endl;
+        cout << "Las horas que has jugado son...." << juego.getHorasJugadas() << " horas nada mal" << endl;
         if(juego.getHorasJugadas() > 1000) cout << "Que vicio :P" << endl;
         break;
 
