@@ -25,11 +25,11 @@ class Usuario
     public:
         const static int ADMINISTRADOR=1, USUARIO_MAYOR=2, USUARIO_MENOR=3; // Constantes de clase: Define los tipos de usuario en forma de enteros
 
-        /**
-         * @param nombre 
-         * @param clave 
-         * @param edad 
-         * @param correo
+        /** Constructor de la clase Usuario
+         * @param string nombre 
+         * @param string clave 
+         * @param int edad 
+         * @param string correo
         */
         Usuario(std::string, std::string, int, std::string); 
         /**
@@ -58,13 +58,13 @@ class Usuario
         /**
          * 
          * @brief agrega un software en la lista de software del usuario
-         * @param software, software a agregar
+         * @param Software, software a agregar
          * @return true si se  pudo agregar, false si ya existe el software en la lista
         */
         bool agregarSoftware(Software*);
         /**
          * @brief Eliminar un software de la lista de software del usuario
-         * @param software a eliminar
+         * @param Software a eliminar
          * @return true si se elimino correctamente, false si no se encontro el software en la lista
         */
         bool eliminarSoftware(Software*);

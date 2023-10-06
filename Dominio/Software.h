@@ -6,6 +6,16 @@
 #include "../Logica/IVisitorSoftware.h"
 #include <iostream>
 using namespace std;
+
+
+
+/**
+*
+*@class  Software
+*@brief clase abstracta
+*
+*
+*/
 class Software 
 {
     
@@ -17,7 +27,10 @@ class Software
         double precio;
 
     public:
-        const static std::string E, A;
+
+        const static std::string E, A; // Define los tipos de clasificación de edad que puede tener los softwares derivados
+        /**
+        */
         Software(const Software&);
         Software(std::string, std::string, std::string, double);
         std::string getNombre();
