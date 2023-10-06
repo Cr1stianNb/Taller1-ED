@@ -1,7 +1,7 @@
 #ifndef VISITOR_SESION_SOFTWARE_H
 #define VISITOR_SESION_SOFTWARE_H
 #include "IVisitorSoftware.h"
-
+#include "VisitorSoftware.h"
 #include "../Dominio/Juego.h"
 #include "../Dominio/Navegador.h"
 #include "../Dominio/Ofimatica.h"

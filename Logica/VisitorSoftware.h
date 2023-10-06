@@ -10,12 +10,12 @@ class VisitorSoftware : public IVisitorSoftware
         string tipoSoftware;
     public:
     
-        static string JUEGO;
-        static string NAVEGADOR;
-        static string OFIMATICA;
-        static string PRODUCCION;
-        static string SEGURIDAD;
-        static string SOCIAL;
+        const static string JUEGO;
+        const static string NAVEGADOR;
+        const static string OFIMATICA;
+        const static string PRODUCCION;
+        const static string SEGURIDAD;
+        const static string SOCIAL;
         VisitorSoftware();
         ~VisitorSoftware();
         virtual void acepta(Juego& , Usuario*);

@@ -2,12 +2,12 @@
 
 
 
-string VisitorSoftware::JUEGO = "Juego";
-string VisitorSoftware::NAVEGADOR = "Navegador";
-string VisitorSoftware::OFIMATICA = "Ofimatica";
-string VisitorSoftware::PRODUCCION = "Produccion";
-string VisitorSoftware::SEGURIDAD = "Seguridad";
-string VisitorSoftware::SOCIAL = "Social";
+const string VisitorSoftware::JUEGO = "Juego";
+const string VisitorSoftware::NAVEGADOR = "Navegador";
+const string VisitorSoftware::OFIMATICA = "Ofimatica";
+const string VisitorSoftware::PRODUCCION = "Produccion";
+const string VisitorSoftware::SEGURIDAD = "Seguridad";
+const string VisitorSoftware::SOCIAL = "Social";
 
 VisitorSoftware::VisitorSoftware(){ this->tipoSoftware = "";};
 VisitorSoftware::~VisitorSoftware(){};

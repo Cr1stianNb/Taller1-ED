@@ -163,7 +163,6 @@ bool Sistema::agregarSocial(std::string nombre, std::string developer, std::stri
     if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Social(nombre, developer, clasificacion, precio);
     listaSoftwares->push_back(software);
-    cout << "Entraaa";
     return true;
 };
 // Agregar un software copia al usuario 
@@ -216,19 +215,41 @@ bool Sistema::eliminarSoftwareBiblioteca(std::string nombreSoftware)
 void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)
 {
     Usuario* usuario = this->getUsuario(nombreUs, clave);
-    Software* software = usuario->getSoftware(nombreSoftware);
+    Software* copiaSoftware = usuario->getSoftware(nombreSoftware);
 
     if(usuario == nullptr) return;
-    if(software == nullptr) return;
+    if(copiaSoftware == nullptr) return;
 
     VisitorSesionSoftware* visitorSesion = new VisitorSesionSoftware(this);
-
-    
-
-
-
+    copiaSoftware->accederSesion(visitorSesion, usuario);
 
 };
+/***
+ *  Método que devuelve la edad de un usuario a partir del nombre 
+ * @param nombre std::string nombre del usuario a buscar la edad
+ * @return devuelve la edad del usuario con un determinado nombre, devuelve -1 si no se encontro el usuario en el sistema 
+*/
+int Sistema::getEdadUsuario(std::string nombre)
+{
+    for(int i=0; i<listaUsuarios->size();i++)
+    {
+        if(nombre == listaUsuarios->at(i)->getNombre())
+        {
+            return listaUsuarios->at(i)->getEdad();
+        }
+    }
+    return -1;
+}
+
+std::string Sistema::getNombresUsuarios()
+{
+    std::string texto= "Lista de usuarios en la biblioteca: \n";
+    for(int i=0; i<listaUsuarios->size();i++)
+    {
+        texto += " -" + listaUsuarios->at(i)->getNombre() + "\n"; 
+    }
+    return texto;
+}
 
 std::string Sistema::getNombresSoftwaresUsuario(std::string nombre, std::string clave)
 {

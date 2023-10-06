@@ -11,15 +11,18 @@ class Sistema
         std::vector<Usuario*>* listaUsuarios;
         std::vector<Software*>* listaSoftwares;
 
-        Usuario* getUsuario(std::string, std::string);
-        Software* getSoftware(std::string);
-        bool eliminarSoftwareSistema(Software*);
+      ;
 
     public:
         Sistema();
         void mostrarUsuarios();
         bool agregarAdmin(std::string, std::string, int);
         bool agregarUsuarioNormal(std::string, std::string, int);
+
+          
+        Usuario* getUsuario(std::string, std::string);
+        Software* getSoftware(std::string);
+        bool eliminarSoftwareSistema(Software*);
         // agregarsoft....
         bool verificarAcceso(std::string, std::string);
         bool isEmptySoftwares();
@@ -42,6 +45,8 @@ class Sistema
 
         void accederSoftware(std::string, std::string, std::string);
 
+        int getEdadUsuario(std::string);
+        std::string getNombresUsuarios();
         std::string getNombresSoftwaresUsuario(std::string, std::string);
         std::string getNombresSoftwares();
         std::vector<std::string>* getNombresUsuariosSoftware(std::string);
