@@ -44,7 +44,7 @@ class Usuario
         */
         std::vector<Software*>* getListaSoftware();
         /**
-         * @brief Encuentra entre la lista de software, el software con un determinado nombre 
+         * @brief Encuentra entre la lista de software, el software con un determinado nombre , nullptr si no se encontro en la lista
          * 
          * @return devuelve el software*
         */

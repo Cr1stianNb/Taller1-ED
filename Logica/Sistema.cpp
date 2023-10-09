@@ -241,17 +241,16 @@ void Sistema::eliminarSesionesDeUsuarios(std::string nombreUsuario)
     }
 };
 
-void Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)
+bool Sistema::accederSoftware(std::string nombreUs, std::string clave, std::string nombreSoftware)
 {
     Usuario* usuario = this->getUsuario(nombreUs, clave);
     Software* copiaSoftware = usuario->getSoftware(nombreSoftware);
-    cout << "Pasa por aca" << endl;
-    if(usuario == nullptr) return;
-    if(copiaSoftware == nullptr) return;
+    if(usuario == nullptr) return false;
+    if(copiaSoftware == nullptr) return false; 
 
     VisitorSesionSoftware* visitorSesion = new VisitorSesionSoftware(this);
-    cout << "Todo bien por aca" << endl;
     copiaSoftware->accederSesion(visitorSesion, usuario);
+    return true;
 
 };
 /***
@@ -284,7 +283,7 @@ std::string Sistema::getNombresUsuarios()
 std::string Sistema::getNombresSoftwaresUsuario(std::string nombre, std::string clave)
 {
     Usuario* usuario = getUsuario(nombre, clave);
-    string texto = "Listados de los Softwares que has iniciado sesión: \n";
+    string texto = "Listados de los Softwares que has iniciado sesion: \n";
     if(usuario == nullptr) return std::string("Usuario " + nombre + " No se ha encontrado en el sistema...");
 
     vector<Software*>* listaSoftware = usuario->getListaSoftware();
@@ -299,6 +298,17 @@ std::string Sistema::getNombresSoftwaresUsuario(std::string nombre, std::string 
     return texto;
     
 
+}
+
+bool Sistema::existeSoftwareUsuario(std::string nombre, std::string clave, std::string nombreSoftware)
+{
+    Usuario* us = this->getUsuario(nombre, clave);
+    if(us == nullptr) return false;
+
+    Software* softwareCopia = us->getSoftware(nombreSoftware);
+    
+    if(softwareCopia == nullptr) return false;
+    return true;
 }
 
 string Sistema::getNombresSoftwares()

@@ -39,4 +39,8 @@ Navegador* Navegador::clonar() const
     return new Navegador(*this);
 }
 void Navegador::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this, nullptr);}
-void Navegador::accederSesion(IVisitorSoftware * visitorSoftware, Usuario * usuario){*this, usuario;};
+
+void Navegador::accederSesion(IVisitorSoftware * visitorSoftware, Usuario * usuario)
+{
+    visitorSoftware->acepta(*this, usuario);
+};

@@ -33,7 +33,10 @@ Produccion* Produccion::clonar() const
 {
     return new Produccion(*this);
 }
-void Produccion::visita(IVisitorSoftware *visitorSoftware){visitorSoftware->acepta(*this, nullptr);}
+void Produccion::visita(IVisitorSoftware *visitorSoftware)
+{
+    visitorSoftware->acepta(*this, nullptr);
+}
 
 void Produccion::accederSesion(IVisitorSoftware * visitorSoftware, Usuario * usuario)
 {

@@ -16,44 +16,48 @@ void VisitorSesionSoftware::acepta(Juego &juego, Usuario *usuario)
         cout << "Lo sentimos pero eres menor de edad para acceder a esta aplicación...\nvuelve cuando seas mas grande ;)" << endl;
         return;
     }
-    cout << "Sesión: " + usuario->getNombre() << endl;
-    cout << "Juego: " << juego.getNombre() << " Género: " << juego.getGenero() << endl 
-    << endl << "1) Cantidad de horas jugadas"
-    << endl << "2) Jugar"
-    << endl << "Ingrese una opción: " << endl;
-    int opc = 0;
-    cin >> opc;
-
-    while(opc != 1 && opc != 2 )
+    cout << "Sesion: " + usuario->getNombre() << endl;
+    cout << "Juego: " << juego.getNombre() << " Genero: " << juego.getGenero() << endl;
+    
+    while(true)
     {
+        int opc = 0;
+        do{
         cout 
         << endl << "1) Cantidad de horas jugadas"
         << endl << "2) Jugar"
-        << endl << "Ingrese una opción: " << endl;
+        << endl << "3) Salir"
+        << endl << "Ingrese una opcion: " << endl;
         cin >> opc;
-    }
-    double horas;
-    switch (opc)
-    {
-    case 1:
-        cout << "Las horas que has jugado son...." << juego.getHorasJugadas() << " horas nada mal" << endl;
-        if(juego.getHorasJugadas() > 1000) cout << "Que vicio :P" << endl;
-        break;
+        }while(opc != 1 && opc != 2 && opc != 3);
 
-    case 2:
-        do{
-            if(horas < 0) cout << " quieres recuperar tu tiempo :(" << endl;
-            cout << "Cuantas horas quieres agregar? " << endl;
-            cin >> horas;
-        }while(horas < 0);
+        double horas;
 
-        juego.agregarHorasJugadas(horas);
-        cout << "Se han agregado tus horas en el registro " << endl;
-        break;
-    default:
+        switch (opc)
+        {
+        case 1:
+            cout << "Las horas que has jugado son...." << juego.getHorasJugadas() << " horas nada mal" << endl;
+            if(juego.getHorasJugadas() > 1000) cout << "Que vicio :P" << endl;
+            break;
 
-        cout << "Error al ingresar la opción" << endl;
-        break;
+        case 2:
+            do{
+                if(horas < 0) cout << " quieres recuperar tu tiempo :(" << endl;
+                cout << "Cuantas horas quieres agregar? " << endl;
+                cin >> horas;
+            }while(horas < 0);
+
+            juego.agregarHorasJugadas(horas);
+            cout << "Se han agregado tus horas en el registro " << endl;
+            break;
+        case 3:
+            cout << "Has salido de " + juego.getNombre() << endl;
+            return;
+        default:
+
+            cout << "Error al ingresar la opcion" << endl;
+            break;
+        }
     }
 };
 

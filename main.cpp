@@ -21,7 +21,8 @@
 using namespace std;
 
 
-bool parseInt(string);
+double parseDouble(string);
+int parseInt(string);
 void transicion(int);
 void login(Sistema*);
 bool logout();
@@ -47,33 +48,72 @@ void transicion(int segundos)
 {
     cout << endl << "Espere un momento..." << endl;
     this_thread::sleep_for(chrono::seconds(segundos));
-    system("clear");
+    system("cls");
 };
 
 
 /**
- * ParseInt(): intenta transformar un string en int,
- * @param string, algo a verificar
- * @return true si se puede transformar
- * false caso contrario
+ * ParseDouble: mientras que el usuario no ponga por teclado un entero, continuara
+ * @param string el contexto del número que se pide
+ * @return un double
+ * 
 */
-bool parseInt(string algo)
+double parseDouble(string contexto)
 {
-    try
+    bool flag = true;
+    double numero;
+    string entrada = "";
+    do
     {
-        int numero = stoi(algo);
-        return true;
-    }
-    catch(const invalid_argument& e)
+        cout << contexto << endl;
+        getline(cin, entrada);
+        try
+        {
+            numero = stod(entrada);
+            flag = false;
+        }
+        catch(const invalid_argument& e)
+        {
+            cout << "Opcion no valida" << endl;
+        }
+        catch(const out_of_range& e1)
+        {
+            std::cerr << e1.what() << "\n";
+        }
+    } while (flag);
+    return numero;
+};
+
+/**
+ * ParseInt(): mientras que el usuario no ponga por teclado un entero, continuara
+ * @param string el contexto del número que se pide
+ * @return un double
+ * 
+*/
+int parseInt(string contexto)
+{
+    bool flag = true;
+    int numero;
+    string entrada = "";
+    do
     {
-        std::cerr << e.what() << '\n';
-    }
-    catch(const out_of_range& e1)
-    {
-        std::cerr << e1.what() << "\n";
-    }
-    return false;
-    
+        cout << contexto << endl;
+        getline(cin, entrada);
+        try
+        {
+            numero = stoi(entrada);
+            flag = false;
+        }
+        catch(const invalid_argument& e)
+        {
+            cout << "Opcion no valida" << endl;
+        }
+        catch(const out_of_range& e1)
+        {
+            std::cerr << e1.what() << "\n";
+        }
+    } while (flag);
+    return numero;
 };
 
 
@@ -96,7 +136,7 @@ int main()
     }
     if(isEmptyUsuario)
     {
-        cout << "No tienes a ningún usuario en el sistema." << endl;
+        cout << "No tienes a ningun usuario en el sistema." << endl;
     }
     return 0;
 }
@@ -113,10 +153,10 @@ void login(Sistema*sistema)
     string nombre, clave;
     do
     {
-        cout << "Ingrese Nombre Usuario: ";
-        cin >> nombre;
+        cout << "Ingrese Nombre Usuario: "; 
+        getline(cin,nombre);
         cout << "Ingrese la clave: ";
-        cin >> clave;
+        getline(cin, clave);
     } while (!sistema->verificarAcceso(nombre, clave));  // hasta que el usuario se encuentra
     
     int tipoUsuario = sistema->getTipoUsuario(nombre, clave); 
@@ -149,12 +189,10 @@ bool logout()
 {
     do
     {
-        cout << "\n-¿Deseas acceder con otro usuario?"
+        cout << "\nDeseas acceder con otro usuario?"
         << endl << "1) Acceder con otro Usuario"
-        << endl << "2) Salir del programa"
-        << endl << "Escoge una opción: ";
-        int opc;
-        cin >> opc;
+        << endl << "2) Salir del programa";
+        int opc = parseInt("\nEscoge una opcion: ");
         switch(opc)
         {
             case 1:
@@ -162,7 +200,7 @@ bool logout()
             case 2:
                 return false;
             default:
-                cout << "Opción invalida, intente nuevamente" << endl;
+                cout << "Opcion invalida, intente nuevamente" << endl;
                 break;
         }
     }while(true);
@@ -181,19 +219,17 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
         transicion(2);
         cout << "Administrador: " << nombre 
         << endl << "1) Agregar Software (Biblioteca General) "
-        << endl << "2) Registrar Software (Sesión personal)" 
+        << endl << "2) Registrar Software (Sesion personal)" 
         << endl << "3) Eliminar Software (Biblioteca General)"
         << endl << "4) Eliminar Software de tus sesiones"   
         << endl << "5) Agregar Usuario "
         << endl << "6) Eliminar Usuario " 
         << endl << "7) Acceder Software" 
         << endl << "8) Acceder al log"
-        << endl << "9) Salir"
-        << endl << "Escoge una opción: " ;
-        int opc;
+        << endl << "9) Salir";
 
-        cout << endl << endl << endl << "spftwares copias "<<sistema->getUsuario(nombre, clave)->getListaSoftware()->size() ;
-        cin >> opc;
+        int opc = parseInt("\nEscoge una opcion: ");
+        
         bool seElimino;
         switch (opc)
         {
@@ -226,10 +262,10 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
             break;
         
         case 9: 
-            cout << "Ha salido del menú administrador" << endl;
+            cout << "Ha salido del menu administrador" << endl;
             return;
         default:
-            cout << "Opción no válida" << endl;
+            cout << "Opcion no valida" << endl;
             break;
         }
  
@@ -249,15 +285,13 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
     {
         cout << "Usuario: " << nombre 
         << endl << "1) Agregar Software  (Biblioteca General)"
-        << endl << "2)  Registrar Software (Uso Personal)" 
+        << endl << "2) Registrar Software (Uso Personal)" 
         << endl << "3) Eliminar Software (Biblioteca General)"
         << endl << "4) Eliminar Software de tus sesiones"
         << endl << "5) Acceder Software"    
-        << endl << "6) Salir"
-        << endl << "Escoge una opción: " ;
-        int opc;
-        cin >> opc;
-
+        << endl << "6) Salir";
+        int opc = parseInt("\nEscoge una opcion: ");
+        transicion(0);
         switch (opc)
         {
         case 1:
@@ -279,10 +313,10 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
             accederSoftware(nombre, clave, *sistema);
             break;
         case 6: 
-            cout << "Ha salido del menú Usuario";
+            cout << "Ha salido del menu Usuario";
             return;
         default:
-            cout << "Opción no válida" << endl;
+            cout << "Opcion no valida" << endl;
             break;
         }
  
@@ -300,29 +334,25 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
 {
     string nombreUsuario;
     cout << "Ingrese el nombre del Usuario: " << endl;
-    cin >> nombreUsuario;
+    getline(cin,nombreUsuario);
 
-    int edad;
-    string stringEdad;
-    cout << "Ingrese la edad del usuario: " << endl;
-    cin >> edad;
-
-    while(!parseInt(stringEdad) || stoi(stringEdad) < 6)
+    
+    int edad = parseInt("Ingrese la edad del usuario: ");
+    while( edad < 6 || edad > 130)
     {
         cout << "Opción incorrecta, (6 < edad)";
-        cout << "Ingrese la edad del usuario: " << endl;
-        cin >> stringEdad;
+        edad = parseInt("Ingrese la edad del usuario: ");
     }
 
     string claveNuevo;
     cout << "Ingrese la clave del usuario: " << endl;
-    cin >> claveNuevo;
+    getline(cin,claveNuevo);
 
     string correo = "";
     if(edad > 18)
     {  
         cout << "Ingrese el correo del usuario: " << endl;
-        cin >> correo;
+        getline(cin,correo);
     }
 
     string tipoUsuario;
@@ -332,8 +362,8 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
         cout << "Ingrese tipo de Usuario: " 
         << endl << "1) Normal"
         << endl << "2) Admin"
-        << endl << "Escoga una opción: " << endl;
-        cin >> opcTipo;
+        << endl;
+        opcTipo  = parseInt("Escoga una opcion: ");
     }  while(opcTipo != 1 && opcTipo != 2);
 
     switch (opcTipo)
@@ -348,7 +378,7 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
         break;
     
     default:
-        cout << "Opción no encontrada" << endl;
+        cout << "Opcion no encontrada" << endl;
         break;
     }
 };
@@ -366,7 +396,7 @@ bool eliminarUsuario(string nombre, string clave, Sistema& sistema)
     bool esEl = false;
     cout << "Ingrese el nombre del usuario a eliminar: " << endl;
     string nombreUsuario;
-    cin >> nombreUsuario;
+    getline(cin,nombreUsuario);
 
     if(nombre == nombreUsuario)
     {
@@ -399,19 +429,19 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 {
     string nombreSoft;
     cout << "Ingrese el nombre del software: " << endl;
-    cin >> nombreSoft;
+    getline(cin, nombreSoft);
 
     string developer;
     cout << "\nIngrese developer de " + nombreSoft + ": "<< endl;
-    cin >> developer;
+    getline(cin,developer);
 
-    int opcClasificacion;
+    
     string clasificacion;
-    cout << "\nIngrese clasificación de edad: " << endl
+    cout << "\nIngrese clasificacion de edad: " << endl
     << "1) " + Software::E << endl
-    << "2) " + Software::A << endl
-    << "-Escoge una opción: ";
-    cin >> opcClasificacion;
+    << "2) " + Software::A << endl;
+    int opcClasificacion = parseInt("-Escoge una opcion: ");
+
     switch(opcClasificacion)
     {
         case 1:
@@ -424,12 +454,9 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             cout << "Opción no válida...\n se cancela agregación" << endl;
             return;
     }
+    double precio = parseDouble("\nIngrese el precio del producto: ");
 
-    double precio;
-    cout << "\nIngrese el precio del producto: " << endl;
-    cin >> precio;
-
-    int opcTipo;
+    
     string nuevoSoft;
     cout << "Ingrese el tipo de software a ingresar: " << endl
     << "1) " + VisitorSoftware::JUEGO << endl
@@ -437,9 +464,8 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
     << "3) " + VisitorSoftware::OFIMATICA << endl
     << "4) " + VisitorSoftware::PRODUCCION << endl
     << "5) " + VisitorSoftware::SEGURIDAD << endl
-    << "6) " + VisitorSoftware::SOCIAL << endl
-    << "-Escoge una opción: ";
-    cin >> opcTipo;
+    << "6) " + VisitorSoftware::SOCIAL << endl;
+    int opcTipo = parseInt("-Escoge una opcion: ");
     string genero = " ";
     string tipoSolucion = "";
     string malware = "";
@@ -449,22 +475,22 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
         case 1:
             while(!Juego::verificarGenero(genero))
             {
-                cout << "Ingrese el género del Juego (1 de las siguientes opciones): " << endl << "("
+                cout << "Ingrese el genero del Juego (1 de las siguientes opciones): " << endl << "("
                 << GENEROS[0] + " , " + GENEROS[1] + " , "
                 << GENEROS[2] + " , " + GENEROS[3] + " , "
                 << GENEROS[4] + " , " + GENEROS[5] + " , "
                 << GENEROS[6] + " , " + GENEROS[7] + " , "
                 << GENEROS[8] + " , " + GENEROS[9] << ")" << endl; 
-                cin >> genero;
+                getline(cin,genero);
             }
 
             if(sistema.agregarJuego(nombreSoft, developer, clasificacion, precio, genero))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
-                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+                cout << "El nombre de la aplicacion ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
             }
     
             break;
@@ -473,7 +499,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 
             if(sistema.agregarNavegador(nombreSoft, developer, clasificacion, precio))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
@@ -484,7 +510,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
         case 3:
             if(sistema.agregarOfimatica(nombreSoft, developer, clasificacion, precio))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
@@ -502,7 +528,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
                 << Produccion::STREAMING + " , "
                 << Produccion::FOTOS + " ) "
                 << endl; 
-                cin >> tipoSolucion;
+                getline(cin,tipoSolucion);
             }
             if(sistema.agregarProduccion(nombreSoft, developer, Software::A , precio, tipoSolucion))
             {
@@ -527,7 +553,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
                 << Seguridad::ROOTKITS + " , "
                 << Seguridad::SPYWARE + " )"
                 << endl; 
-                cin >> malware;
+                getline(cin,malware);
             }
             if(sistema.agregarProduccion(nombreSoft, developer, clasificacion , precio, malware))
             {
@@ -571,7 +597,7 @@ void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
 {
     cout << "Ingrese el nombre del software a ELIMINAR en la Biblioteca: (Se pedira autorización si es que existe otro usuario utilizando la app)" << endl;
     string nombreSoftware;
-    cin >> nombreSoftware;
+    getline(cin,nombreSoftware);
     vector<string>* listaUsuario = sistema.getNombresUsuariosSoftware(nombreSoftware);
     if(listaUsuario == nullptr) cout << "El nombre del software no se encontro..." << endl;
     else
@@ -604,8 +630,10 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
     for(int i=0; i<listaUsuario->size();i++)
     {
         cout << "Nombre de Usuario: " << listaUsuario->at(i) << " ¿Deseas eliminar el software: " + nombreSoft + "?" 
-        << endl << "1) Si" << endl << "2) No" << endl << "Escoge una opción: ";
-        cin >> opc;
+        << endl << "1) Si"
+        << endl << "2) No" 
+        << endl;
+        opc = parseInt("Escoge una opción: ");
 
         switch(opc)
         {
@@ -634,7 +662,7 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
     string nombreSoft;
     cout << sistema.getNombresSoftwaresUsuario(nombre, clave) << endl;
     cout << "Ingresa el nombre del software a eliminar de la sesión activa: " << endl;
-    cin >> nombreSoft;
+    getline(cin,nombreSoft);
     bool estaEliminado = sistema.eliminarSoftwareUsuario(nombre, clave, nombreSoft);
     if(estaEliminado) 
     {
@@ -654,13 +682,18 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
 */
 void registrarSoftware(string nombre, string clave , Sistema& sistema)
 {  
-    if(!sistema.verificarAcceso(nombre, clave)) return; //Si no se encuentra el usuario, no continuar
+    if(!sistema.verificarAcceso(nombre, clave) || sistema.isEmptySoftwares()) return; //Si no se encuentra el usuario, no continuar
     string nombreSoft;
    
-    cout << "Registrar un software (Uno no existente en sus registros personales)" 
-    << endl << sistema.getNombresSoftwares()
-    << endl << "Ingrese el nombre del software a registrar: ";
-    cin >> nombreSoft;
+    do
+    {
+        cout << "Registrar un software (Uno no existente en sus registros personales)" 
+        << endl << sistema.getNombresSoftwares()
+        << endl << "Ingrese el nombre del software a registrar: ";
+        getline(cin,nombreSoft);
+        
+    }while(!sistema.existeSoftware(nombreSoft));
+  
 
 
     bool ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
@@ -687,25 +720,32 @@ void registrarSoftware(string nombre, string clave , Sistema& sistema)
 */
 void accederSoftware(string nombre , string clave, Sistema& sistema)
 {
+    if(sistema.isEmptyRegistrosUsuario(nombre, clave))
+    {
+        cout << "No existen sesiones en tus registros, registrate a un software antes de acceder" << endl;
+        return;
+    }
+
     string nombreSoftware = "";
+    do{
+    cout 
+    << sistema.getNombresSoftwaresUsuario(nombre, clave)
+    << endl 
+    << "Ingrese el nombre del software a acceder: ";
+    getline(cin,nombreSoftware);
+    }while(!sistema.existeSoftwareUsuario(nombre, clave, nombreSoftware));
+
     
-    cout << sistema.getNombresSoftwares() // Muestra todos los nombres de softwares existentes
-    << endl << "Ingrese el nombre del software a acceder: ";
-    cin >> nombreSoftware;
-
-
-    if(nombreSoftware == "") // Si no existen softwares en el sistema
+    bool accedio = sistema.accederSoftware(nombre, clave, nombreSoftware);
+    if(!accedio)
     {
-        cout << "No existen softwares en la biblioteca..., no puedes acceder porque no existen aplicaciones" << endl;
-        return;
+        cout << "\n El nombre del software que ingresaste no existe en tu repertorio..." << endl;
     }
-    else if(sistema.isEmptyRegistrosUsuario(nombre, clave)) // Si no tiene registros el usuario
+    else 
     {
-        cout << "No te has registrado a ninguna aplicación...no puedes acceder sin haber registrado aplicaciones previamente" << endl;
-        return;
+        cout << "Si accedio << endl";
     }
-    cout << nombreSoftware << nombreSoftware << endl;
-    sistema.accederSoftware(nombre, clave, nombreSoftware); // no va a ejecutar el codigo si el nombre del software no se encuentra en el sistema
+    transicion(1.2);
 };
 
 
@@ -785,7 +825,7 @@ void poblarBaseDatos(Sistema& sistema)
     sistema.agregarSeguridad("Windows Defender", "Microsoft", Software::A, 1, Seguridad::RANSOMWARE);
     sistema.agregarSeguridad("Norton Antivirus", "NortonLifeLock", Software::A, 10.1, Seguridad::TROYANOS);
     sistema.agregarSeguridad("McAfee", "McAfee", Software::E, 40.1, Seguridad::SPYWARE);
-    sistema.agregarSeguridad("BitDefender", "Bitdefender", Software::E, Seguridad::ROOTKITS);
+    sistema.agregarSeguridad("BitDefender", "Bitdefender", Software::E, 60.3, Seguridad::ROOTKITS);
     sistema.agregarSeguridad("Avast", "Avast Software", Software::A, 101, Seguridad::GUSANOS);
     sistema.agregarSeguridad("Sophos Antivirus", "Sophos group", Software::E, 1.12, Seguridad::BOTNETS);
     /*Instancia de Seguridad*/

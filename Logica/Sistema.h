@@ -215,8 +215,9 @@ class Sistema
          * @param string nombre del usuario
          * @param string clave del usuario
          * @param string nombre del software
+         * @return true si se pudo acceder, false lo contrario
         */
-        void accederSoftware(std::string, std::string, std::string);
+        bool accederSoftware(std::string, std::string, std::string);
 
         /**
          * Devuelve la edad de un usuario a partir del nombre
@@ -235,6 +236,16 @@ class Sistema
          * @param string clave del usuario 
         */
         std::string getNombresSoftwaresUsuario(std::string, std::string);
+
+        /**
+         * @brief Verifica si el software por parametro existe en el usuario
+         * @warning El usuario debe existir
+         * @param string nombre del usuario
+         * @param string clave del usuario
+         * @param string nombre del software a verificar
+         * @return true, si existe, false lo contrario
+        */
+        bool existeSoftwareUsuario(std::string, std::string, std::string);
         /**
          * El listado el listado de nombres de los softwares que existen en el sistema
          * @return string 
