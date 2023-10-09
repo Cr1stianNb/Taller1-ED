@@ -53,7 +53,7 @@ void transicion(int segundos)
 
 /**
  * ParseInt(): intenta transformar un string en int,
- * @param algo, string a verificar
+ * @param string, algo a verificar
  * @return true si se puede transformar
  * false caso contrario
 */
@@ -782,11 +782,17 @@ void poblarBaseDatos(Sistema& sistema)
     /*\Instancia de Navegador*/
 
     /*Instancia de Seguridad*/
-    sistema.agregarSeguridad();
+    sistema.agregarSeguridad("Windows Defender", "Microsoft", Software::A, 1, Seguridad::RANSOMWARE);
+    sistema.agregarSeguridad("Norton Antivirus", "NortonLifeLock", Software::A, 10.1, Seguridad::TROYANOS);
+    sistema.agregarSeguridad("McAfee", "McAfee", Software::E, 40.1, Seguridad::SPYWARE);
+    sistema.agregarSeguridad("BitDefender", "Bitdefender", Software::E, Seguridad::ROOTKITS);
+    sistema.agregarSeguridad("Avast", "Avast Software", Software::A, 101, Seguridad::GUSANOS);
+    sistema.agregarSeguridad("Sophos Antivirus", "Sophos group", Software::E, 1.12, Seguridad::BOTNETS);
     /*Instancia de Seguridad*/
 
     /*Instancia de Social*/
-    sistema.agregarSocial();
+    sistema.agregarSocial("Instagram", "Meta", Software::E, 0);
+    sistema.agregarSocial("Omegle", "Omegle", Software::A, 0);
     /*Instancia de Social*/
 };
 
