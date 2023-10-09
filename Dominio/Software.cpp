@@ -13,7 +13,7 @@ Software::Software(const Software& otro)
     this->clasificacion  = otro.clasificacion;
     this->precio = otro.precio;
     this->listaUsuario = new std::vector<Usuario*>(0);
-}
+};
 Software::Software(std::string nombre, std::string developer, std::string clasificacion, double precio)
 {
     this->nombre = nombre;
@@ -63,11 +63,20 @@ void Software::eliminarAplicacionDeUsuarios()
 
 };
 
+/**
+ * 
+*/
+bool Software::existeUsuario(string nombreUsuario)
+{
+    Usuario* us = this->getUsuario(nombreUsuario);
+    if(us != nullptr) return true;
+    return false;
+};
+
 bool Software::agregarUsuario(Usuario *usuario)
 {
-    Usuario* us = this->getUsuario(usuario->getNombre());
-    if(us != nullptr) return false;
-    if(us == usuario) return false;
+    if(usuario == nullptr) return false;
+    this->listaUsuario->push_back(usuario);
     return true;
 };
 Usuario *Software::getUsuario(std::string nombre)

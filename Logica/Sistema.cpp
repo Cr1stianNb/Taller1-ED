@@ -41,7 +41,7 @@ bool Sistema::agregarAdmin(string nombre, string clave, int edad, std::string co
     this->listaUsuarios->push_back(admin);
     return true;
 };
-bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad, std::string correo)
+bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad, std::string correo = "")
 {
     if(this->getUsuario(nombre, clave) != nullptr) return false; 
 
@@ -126,7 +126,6 @@ bool Sistema::agregarJuego(std::string nombre, std::string developer, std::strin
     if(this->getSoftware(nombre) != nullptr) return false;
     Software* software = new Juego(nombre, developer, clasificacion, precio, genero);
     listaSoftwares->push_back(software);
-    cout << "ENtra";
     return true;
 
 };
@@ -175,11 +174,12 @@ bool Sistema::agregarSoftwareUsuario(std::string nombre, std::string clave, std:
     if(usuario == nullptr) return false;
     if(software == nullptr) return false;
 
-    bool noExiste = software->agregarUsuario(usuario);
-    if(noExiste) 
+    bool Existe = software->existeUsuario(nombre);
+    if(!Existe) 
     {
-        Software* soft = software->clonar();
+        Software* soft = software->clonar(); // copia
         usuario->agregarSoftware(soft);
+        software->agregarUsuario(usuario); // original
         return true;
     }
     return false;

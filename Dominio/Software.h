@@ -82,6 +82,13 @@ class Software
          * @param Usuario agrega un usuario a la lista de usuarios
         */
         bool agregarUsuario(Usuario*);
+
+        /**
+         * @brief Verifica si el usuario por parametro existe en la lista de Usuarios del software
+         * @param string el nombre del usuario a verificar
+         * @return true, si existe, false si no existe en la lista Usuarios
+        */
+        bool existeUsuario(string);
         /**
          * @return Usuario*
         */

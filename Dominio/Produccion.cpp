@@ -11,7 +11,7 @@ Produccion::Produccion(const Produccion& otro): Software(otro.nombre, otro.devel
     this->cantidadHoras = otro.cantidadHoras;
 };
 Produccion::Produccion(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipoSolucion):
-    Software(nombre, developer, clasificacion, precio)
+    Software(nombre, developer, Software::A, precio)
     {
         this->tipoSolucion = tipoSolucion;
         this->cantidadHoras = 0;

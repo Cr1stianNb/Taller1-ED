@@ -1,4 +1,6 @@
 #include <iostream>
+#include <thread> // this_thread::sleep_for
+#include <chrono> // chrono::seconds
 
 #include "Dominio/Software.cpp"
 #include "Dominio/Usuario.cpp"
@@ -20,6 +22,7 @@ using namespace std;
 
 
 bool parseInt(string);
+void transicion(int);
 void login(Sistema*);
 bool logout();
 void mostrarMenuAdmin(string, string, Sistema*);
@@ -36,6 +39,16 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft)
 void mostrarBiblioteca(Sistema&);
 void poblarBaseDatos(Sistema&);
 
+
+/**
+ * @brief Función para transicionar entre menus
+*/
+void transicion(int segundos)
+{
+    cout << endl << "Espere un momento..." << endl;
+    this_thread::sleep_for(chrono::seconds(segundos));
+    system("clear");
+};
 
 
 /**
@@ -77,7 +90,9 @@ int main()
     while(flag && !isEmptyUsuario) 
     {
         login(sistema);
+        transicion(1.5);
         flag = logout();
+        transicion(0.75);
     }
     if(isEmptyUsuario)
     {
@@ -134,7 +149,7 @@ bool logout()
 {
     do
     {
-        cout << "-¿Deseas acceder con otro usuario?"
+        cout << "\n-¿Deseas acceder con otro usuario?"
         << endl << "1) Acceder con otro Usuario"
         << endl << "2) Salir del programa"
         << endl << "Escoge una opción: ";
@@ -163,6 +178,7 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
 {
     while(true)
     {
+        transicion(2);
         cout << "Administrador: " << nombre 
         << endl << "1) Agregar Software (Biblioteca General) "
         << endl << "2) Registrar Software (Sesión personal)" 
@@ -570,7 +586,8 @@ void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
             cout  << " , no se elimino la Aplicación..." << endl;
         }
     }
-
+    cout << "El tamaño de la lista es: " << listaUsuario->size() << endl;
+    this_thread::sleep_for(chrono::seconds(10));
 
 };
 
@@ -695,16 +712,82 @@ void accederSoftware(string nombre , string clave, Sistema& sistema)
 
 void poblarBaseDatos(Sistema& sistema)
 {
-    sistema.agregarAdmin("Cristian","123", 20, "cristian@admin.cl");   
-    sistema.agregarAdmin("Jose", "123", 30, "jose@admin.cl");
-    sistema.agregarAdmin("Manuel", "hs123", 40, "manuel@admin.cl");
-    sistema.agregarAdmin("Andres", "km12", 33, "andres@admin.cl");
+    sistema.agregarAdmin("Cristian","123", 20, "cristian@admin.cl");  // Admin 
+
+    /*Inicio Instancias Usuarios Mayores*/
+    sistema.agregarUsuarioNormal("Jose", "123", 30, "jose@normal.cl");
+    sistema.agregarUsuarioNormal("Manuel", "hs123", 40, "manuel@normal.cl");
+    sistema.agregarUsuarioNormal("Andres", "km12", 33, "andres@normal.cl");
+    sistema.agregarUsuarioNormal("Moia", "grmos", 19, "usuarioNormal@aaa.cl");
+    sistema.agregarUsuarioNormal("Shelly","asd123",23, "shelly@normal.cl");
+    sistema.agregarUsuarioNormal("Colt", "coltNice", 90, "terceraEdad@normal.cl");
+    sistema.agregarUsuarioNormal("bluefox", "jijia", 50, "bluefox@normal.cl");
+    sistema.agregarUsuarioNormal("doblangel", "claramente", 34, "aparentemente@normal.cl");
+    sistema.agregarUsuarioNormal("oscarrojas", "godines", 60, "oscarsito123@normal.cl");
+    sistema.agregarUsuarioNormal("dj_garay", "vegetaDg", 21, "vegeta@dragonBoll.cl");
+    /*Final Instancia Usuarios Mayores*/
+
+    /*Inicia Instancias Usuarios Menores*/
+    sistema.agregarUsuarioNormal("Augusto", "123", 10);
+    sistema.agregarUsuarioNormal("Nina", "gavo", 9);
+    sistema.agregarUsuarioNormal("Senda", "senda3000" ,13);
+    sistema.agregarUsuarioNormal("Narla", "123", 14);
+    /*Final Instancias Usuarios Menores*/
 
 
-    // Softwares
-    sistema.agregarJuego("Mario", "Nintendo", Software::E, 100, GENEROS[3]);
-    sistema.agregarNavegador("Chrome", "Google", Software::E, 0);
+    /*Inicio Intancias Softwares*/
+    
+    /*Inicio Instancia Juegos*/
+    /* {"FPS", "Visual novel", "PUZZLE", "PLATAFORMERO", "RPG", "HORROR", "ESTRATEGIA", "DEPORTES", "ACCIÓN", "ADVENTURAS"};*/
+    sistema.agregarJuego("Grand Theft Auto V", "Rockstar North",Software::A, 29.99, GENEROS[9]);
+    sistema.agregarJuego("The Witcher 3: Wild Hunt", "CD Projekt",Software::E, 39.99, GENEROS[9]);
+    sistema.agregarJuego("Red Dead Redemption 2", "Rockstar Games",Software::E, 59.99, GENEROS[8]);
+    sistema.agregarJuego("Brawl Stars", "SUPERCELL", Software::E, 49.99, GENEROS[8]);
+    sistema.agregarJuego("FIFA23", "EA", Software::E, 29.99, GENEROS[7]);
+    sistema.agregarJuego("PES2012", "Konami", Software::E, 39.99, GENEROS[7]);
+    sistema.agregarJuego("Minecraft", "Mojang Studios",Software::E, 19.99, GENEROS[6]);
+    sistema.agregarJuego("Fortnite", "Epic Games",Software::E, 0.00, GENEROS[6]);
+    sistema.agregarJuego("Saya no Uta", "Nitroplus", Software::A, 59.99, GENEROS[5]);
+    sistema.agregarJuego("Higurashi no Naku Koro ni", "Expansion", Software::A, 19.99, GENEROS[5]);
+    sistema.agregarJuego("Pokemon Equipo de rescate rojo", "The pokemon company", Software::E, 49.99, GENEROS[4]);
+    sistema.agregarJuego("Final Fantasy VII", "Square Enix", Software::E, 29.99, GENEROS[4]);
+    sistema.agregarJuego("Mario bros", "Nintendo", Software::E, 39.99, GENEROS[3]);
+    sistema.agregarJuego("Sonic", "Sega", Software::E, 59.99, GENEROS[3]);
+    sistema.agregarJuego("Candy Crush", "King", Software::E, 19.99, GENEROS[2]);
+    sistema.agregarJuego("Tetris", "Alekséi Pázhitnov", Software::E, 19.99, GENEROS[2]);
+    sistema.agregarJuego("Fate stay night", "Type Moon", Software::A, 29.99, GENEROS[1]);
+    sistema.agregarJuego("Steins gate ", "Nitroplus", Software::E, 39.99, GENEROS[1]);
+    sistema.agregarJuego("Fornite", "Epic games", Software::E, 59.99, GENEROS[0]);
+    sistema.agregarJuego("CSGO", "Valve", Software::A, 19.99, GENEROS[0]);
+    /*\Final Instancia Juegos*/
 
+    /*Intancias de Ofimatica*/
+    sistema.agregarOfimatica("Word","Microsoft",Software::E, 43.3);
+    sistema.agregarOfimatica("Atom","Github",Software::E, 0);
+    sistema.agregarOfimatica("Excel","Microsoft",Software::E, 23.53);
+    sistema.agregarOfimatica("PowerPoint","Microsoft",Software::E, 23.53);
+    sistema.agregarOfimatica("Google Docs","Google",Software::E, 0);
+    /*Intancias de Ofimatica*/
+
+    /*Instancia de Produccion*/
+    sistema.agregarProduccion("Photoshop","Adobe",Software::A, 90.1,Produccion::FOTOS);
+    sistema.agregarProduccion("Manim","Manim Community",Software::A, 0,Produccion::VIDEO);
+    sistema.agregarProduccion("FL studio","Imagine Line",Software::A, 0,Produccion::MUSICA);
+    sistema.agregarProduccion("StreamLabs OBS","Jim",Software::A , 0 , Produccion::STREAMING);
+    /*\Instancia de Produccion*/
+
+    /*Instancia de Navegador*/
+    sistema.agregarNavegador("Chrome","Google",Software::E, 0);
+    sistema.agregarNavegador("Microsoft EDge","Microsoft",Software::E, 0);
+    /*\Instancia de Navegador*/
+
+    /*Instancia de Seguridad*/
+    sistema.agregarSeguridad();
+    /*Instancia de Seguridad*/
+
+    /*Instancia de Social*/
+    sistema.agregarSocial();
+    /*Instancia de Social*/
 };
 
 void accederLog(string nombre, string clave, Sistema& sistema)
