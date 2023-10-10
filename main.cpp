@@ -20,7 +20,10 @@
 
 using namespace std;
 
+// Determina el comando a utilizar en system
+const char* comandoCMD;
 
+void determinarComando();
 double parseDouble(string);
 int parseInt(string);
 void transicion(int);
@@ -49,7 +52,7 @@ void transicion(int segundos)
 {
     cout << endl << "Espere un momento..." << endl;
     this_thread::sleep_for(chrono::seconds(segundos));
-    system("cls");
+    system(comandoCMD);
 };
 
 
@@ -117,13 +120,37 @@ int parseInt(string contexto)
     return numero;
 };
 
+void determinarComando()
+{
+    int opc;
+    do{
+    cout << "Que Sistema operativo ocupa?"
+    << endl << "1) Windows"
+    << endl << "2) Linux/Mac" << endl;
+    opc = parseInt("Ingrese una opcion: ");
+    }while(opc != 2 && opc != 1);
 
+    switch(opc)
+    {
+        case 1:
+            comandoCMD = "cls";
+            break;
+        
+        case 2:
+            comandoCMD = "clear";
+            break;
+        default:
+            break;
+    }
+
+};
 
 /**
 Función main
 */
 int main()
 {
+    determinarComando();
     Sistema* sistema = new Sistema();
     poblarBaseDatos(*sistema);
     agregarAmigosPoblarDatos(*sistema);
