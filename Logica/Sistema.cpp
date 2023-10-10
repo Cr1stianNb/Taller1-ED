@@ -40,6 +40,10 @@ bool Sistema::agregarAdmin(string nombre, string clave, int edad, std::string co
     Usuario* admin = new Administrador(nombre, clave, edad, correo);
     this->listaUsuarios->push_back(admin);
     return true;
+}
+std::vector<Usuario *> *Sistema::getListaUsuario()
+{
+    return this->listaUsuarios;
 };
 bool Sistema::agregarUsuarioNormal(std::string nombre, std::string clave, int edad, std::string correo = "")
 {
@@ -109,7 +113,19 @@ int Sistema::getTipoUsuario(string nombre, string clave)
     return tipo;
 };
 
-Software* Sistema::getSoftware(string nombre)
+Usuario *Sistema::getUsuario(std::string nombre)
+{
+    for(int i=0; i<listaUsuarios->size();i++)
+    {
+        if(listaUsuarios->at(i)->getNombre() == nombre)
+        {
+            return listaUsuarios->at(i);
+        }
+    }
+    return nullptr;
+}
+
+Software *Sistema::getSoftware(string nombre)
 {
     for(int i=0; i<listaSoftwares->size();i++)
     {
@@ -194,6 +210,7 @@ bool Sistema::eliminarSoftwareUsuario(std::string nombre, std::string clave, std
     if(us == nullptr) return false;
     if(soft == nullptr) return false;
 
+    soft->eliminarUsuario(us->getNombre());
     return us->eliminarSoftware(soft);
 }
 
@@ -306,7 +323,7 @@ bool Sistema::existeSoftwareUsuario(std::string nombre, std::string clave, std::
     if(us == nullptr) return false;
 
     Software* softwareCopia = us->getSoftware(nombreSoftware);
-    
+
     if(softwareCopia == nullptr) return false;
     return true;
 }

@@ -31,6 +31,8 @@ class Sistema
          * @return true si se agrego, false lo contrario
         */
         bool agregarAdmin(std::string, std::string, int, std::string);
+
+        std::vector<Usuario*>* getListaUsuario();
         /**
          * crea un UsuarioNormal y lo agrega a la lista Usuario
          * @param string nombre
@@ -48,6 +50,13 @@ class Sistema
          * @return puntero a Usuario 
         */
         Usuario* getUsuario(std::string, std::string);
+
+        /**
+         * Obtener el puntero de un usuario con un nombre
+         * @param string nombre del usuario
+         * @return Usuario*
+        */
+        Usuario* getUsuario(std::string);
         /**
          * Obtener el ´puntero de un software mediante nombre
          * @param string nombre del software
@@ -257,6 +266,8 @@ class Sistema
          * @return vector de string con los nombres de los usuarios
         */
         std::vector<std::string>* getNombresUsuariosSoftware(std::string);
+
+        
 
         /** Verifica si el usuario tiene todos los registros*/
         bool tieneTodo(string, string);

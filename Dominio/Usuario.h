@@ -4,9 +4,11 @@
 #include <vector>
 #include "../Logica/IVisitorUsuario.h"
 
+
 // Forward declaration (evitar referencias circulares)
 class Software;
-
+class Sistema;
+class VisitorSoftware;
 
 /**
  * @class Usuario
@@ -34,7 +36,7 @@ class Usuario
         Usuario(std::string, std::string, int, std::string); 
         /**
          * @brief constructor copia
-         * @param Instancia a copiar
+         * @param Usuario instancia  a copiar
         */
         Usuario(const Usuario&);
 
@@ -65,6 +67,7 @@ class Usuario
         /**
          * @brief Eliminar un software de la lista de software del usuario
          * @param Software a eliminar
+         * @param Sistema sistema, permite eliminar los amigos de las aplicaciones sociales
          * @return true si se elimino correctamente, false si no se encontro el software en la lista
         */
         bool eliminarSoftware(Software*);

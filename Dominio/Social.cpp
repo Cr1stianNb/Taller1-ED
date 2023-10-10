@@ -3,18 +3,24 @@
 
 Social::Social(const Social& otro) : Software(otro.nombre, otro.developer, otro.clasificacion, otro.precio)
 { 
-    this->listaAmigos = otro.listaAmigos;
+    this->listaAmigos = new std::vector<std::string>(0);
+    nombreUsuario = "";
 };
 
 Social::Social(std::string nombre, std::string developer, std::string clasificacion, double precio) : Software(nombre, developer, clasificacion, precio)
 {
-    this->listaAmigos = new std::vector<std::string>();
+    this->listaAmigos = new std::vector<std::string>(0);
+
     nombreUsuario = "";
-}
+};
 // Retorna el usuario que accedio a una aplicación social
 std::string Social::getNombreUsuario()
 {
     return this->nombreUsuario;
+};
+std::vector<string> *Social::getListaAmigo()
+{
+    return this->listaAmigos;
 }
 void Social::setNombreUsuario(std::string nombreUsuario)
 {
@@ -30,28 +36,41 @@ std::string Social::getNombresAmigos()
     }
     return texto;
 };
-/**
- * 
- * Método que agrega un amigo a la lista de amigos
- * @param amigo nombre amigo a agregar
- * @return true si se agrega correctamente, false si el nombre del amigo es igual al usuario asociado
- * 
-*/
-bool Social::agregarAmigo(std::string  amigo)
+
+bool Social::existeAmigo(std::string nombreAmigo)
 {
-    if(amigo == this->nombreUsuario)
+    for(int i=0;i<listaAmigos->size();i++)
+    {
+        if(nombreAmigo == listaAmigos->at(i))
+        {
+            return true;
+        }
+    }
+    return false;
+};
+bool Social::agregarAmigo(Usuario* amigo)
+{
+    if(amigo->getNombre() == this->nombreUsuario || existeAmigo(amigo->getNombre()))
     {
         return false;
     }
-    listaAmigos->push_back(amigo);
+    Software* softwareAmigo =  amigo->getSoftware(this->nombre);
+    if(softwareAmigo == nullptr)
+    {
+        return false; // Significa que no tiene la aplicación en sus registros
+    }
+    
+    Social* appAmigo = dynamic_cast<Social*>(softwareAmigo);
+    listaAmigos->push_back(amigo->getNombre()); // Se asocian a ambas app
+    appAmigo->getListaAmigo()->push_back(this->nombreUsuario);
     return true;
 };
 
-bool Social::eliminarAmigo(std::string  examigo)
+bool Social::eliminarAmigo(Usuario* examigo)
 {
     for(int i=0; i<listaAmigos->size();i++)
     {
-        if(examigo == listaAmigos->at(i))
+        if(examigo->getNombre() == listaAmigos->at(i))
         {
             listaAmigos->erase(listaAmigos->begin() + i);
             return true;
@@ -59,9 +78,14 @@ bool Social::eliminarAmigo(std::string  examigo)
     }
     return false;
 }
+
 void Social::asociarUsuario(std::string usuario)
 {
     this->nombreUsuario = usuario;
+}
+bool Social::isEmptyListaAmigo()
+{
+    return listaAmigos->empty();
 };
 Social *Social::clonar() const
 {

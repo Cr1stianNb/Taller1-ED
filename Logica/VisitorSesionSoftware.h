@@ -11,6 +11,10 @@
 #include <string>
 using namespace std;
 
+double parseDouble(string);
+int parseInt(string);
+void transicion(int);
+
 class Sistema;
 /**
  * @class VisitorSesionSoftware
@@ -38,6 +42,14 @@ class VisitorSesionSoftware : public IVisitorSoftware
         virtual void acepta(Produccion&, Usuario*);
         virtual void acepta(Seguridad&, Usuario*);
         virtual void acepta(Social&, Usuario*);
+
+        /**
+         * Devuelve en formato de string los nombres del vector de string
+         * @param vector el vector de string con los nombres
+         * @param string el nombre del usuario que esta en actual sesion
+         * @return el string con el listado de nombres
+        */
+        string getNombreUsuarios(vector<string>* listanombres, string usuarioAcceso);
         
 
 

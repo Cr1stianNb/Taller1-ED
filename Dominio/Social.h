@@ -1,7 +1,6 @@
 #ifndef SOCIAL_H
 #define SOCIAL_H
 #include "Software.h"
-
 /**
  * @class Social , clase derivada de Software
 */
@@ -31,6 +30,10 @@ class Social : public Software
         */
         std::string getNombreUsuario();
         /**
+         * Devuelve la listaAmigos 
+        */
+        std::vector<string>* getListaAmigo();
+        /**
          * Cambia el nombre del usuario
         */
         void setNombreUsuario(std::string);
@@ -38,24 +41,35 @@ class Social : public Software
          * @return el nombre de todos los amigos que tiene el usuario 
         */
         std::string getNombresAmigos();
+
+        /**
+         * método que revisa si el amigo ya existe en la lista de amigos
+         * @param string nombre del amigo
+         * @return true si el amigo existe, false lo contrario
+        */
+       bool existeAmigo(std::string);
         /**
          * @brief agrega el nombre del amigo a la listaAmigos
-         * @param string nombre del amigo
+         * @param Usuario* puntero  del amigo
          * @return true si se agrego, false lo contrario
         */
-        bool agregarAmigo(std::string);
+        bool agregarAmigo(Usuario*);
         /**
          * @brief elimina un amigo por nombre
-         * @param el nombre del amigo a eliminar
+         * @param Usuario* puntero del ex-amigo
          * @return true si se elimino algún usuario, false lo constrario
         */
-        bool eliminarAmigo(std::string);
+        bool eliminarAmigo(Usuario*);
+
+       
         /**
          * @brief asocia el usuario que se registro en la aplicación
-         * @param el nombre del usuario
+         * @param string nombre del usuario
          * 
         */
         void asociarUsuario(std::string);
+
+        bool isEmptyListaAmigo();
         /**
          * @brief Clona el objeto social, instanciando un nuevo objeto
          * @return una instancia copia del objeto social

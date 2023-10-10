@@ -3,7 +3,7 @@
 
 /// @brief 
 const std::string Software::E = "Everyone", Software::A = "Adult";
-
+class Sistema;
 
 
 Software::Software(const Software& otro)

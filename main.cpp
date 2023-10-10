@@ -34,11 +34,13 @@ void eliminarSoftwareSesion(string, string, Sistema&);
 void accederSoftware(string, string, Sistema&);
 void agregarUsuario(string, string, Sistema&);
 bool eliminarUsuario(string, string, Sistema&);
+void registrarSoftware(string, string, Sistema&, string);
 void registrarSoftware(string, string, Sistema&);
 void accederLog(string, string, Sistema&);
 bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
 void mostrarBiblioteca(Sistema&);
 void poblarBaseDatos(Sistema&);
+void agregarAmigosPoblarDatos(Sistema&);
 
 
 /**
@@ -125,6 +127,7 @@ int main()
 {
     Sistema* sistema = new Sistema();
     poblarBaseDatos(*sistema);
+    agregarAmigosPoblarDatos(*sistema);
     bool flag = true;
     bool isEmptyUsuario = sistema->isEmptyUsuarios(); // No se ingresará al sistema sin haber usuarios previamente, para evitar errores.
     while(flag && !isEmptyUsuario) 
@@ -208,8 +211,8 @@ bool logout()
 
 /**
  * Muestra el menú admin.
- * @param nombre El nombre del usuario que inicio sesión
- * @param clave la clave del usuario que inicio sesión
+ * @param string El nombre del usuario que inicio sesión
+ * @param string la clave del usuario que inicio sesión
  * @param sistema contiene la lógica para cumplir los requerimientos
 */
 void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
@@ -227,10 +230,12 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
         << endl << "7) Acceder Software" 
         << endl << "8) Acceder al log"
         << endl << "9) Salir";
-
+        cout << endl  << "size del usuario ->" << sistema->getUsuario(nombre, clave)->getListaSoftware()->size() << endl << endl;
         int opc = parseInt("\nEscoge una opcion: ");
         
+
         bool seElimino;
+        transicion(0);
         switch (opc)
         {
         case 1:
@@ -275,14 +280,15 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
 /**
  * Muestra el menú para los usuarios normales, ya sea mayor o menor de edad, ya que, son otras clases que verificarán la edad
  * Contiene menos opciones que el menú administrador
- * @param nombre nombre del usuario que inicio sesión
- * @param clave clave del usuario que inicio sesión
+ * @param string nombre del usuario que inicio sesión
+ * @param string clave del usuario que inicio sesión
  * @param sistema administra la lógica para cumplir los requerimientos del menú
 */
 void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
 {
     while(true)
     {
+        transicion(2);
         cout << "Usuario: " << nombre 
         << endl << "1) Agregar Software  (Biblioteca General)"
         << endl << "2) Registrar Software (Uso Personal)" 
@@ -290,6 +296,7 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
         << endl << "4) Eliminar Software de tus sesiones"
         << endl << "5) Acceder Software"    
         << endl << "6) Salir";
+        cout << endl  << "size del usuario ->" << sistema->getUsuario(nombre, clave)->getListaSoftware()->size() << endl << endl;
         int opc = parseInt("\nEscoge una opcion: ");
         transicion(0);
         switch (opc)
@@ -326,8 +333,8 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
 /**
  * AgregarUsuario:
  * Agrega un usuario a la biblioteca (sistema)
- * @param nombre nombre del usuario que inicio sesión
- * @param clave clave del usuario que inicio sesión
+ * @param string nombre del usuario que inicio sesión
+ * @param string clave del usuario que inicio sesión
  * @param sistema clase que implementa la lógica del programa
 */
 void agregarUsuario(string nombre, string clave, Sistema& sistema)
@@ -385,8 +392,8 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
 
 /**
  * Elimina un usuario de la biblioteca general
- * @param nombre Usuario que inicio sesión
- * @param clave clave del usuario
+ * @param string Usuario que inicio sesión
+ * @param string clave del usuario
  * @param sistema clase que implementa la lógica
  * @return true si el usuario que se elimino es el mismo quien inicio sesión, es debido a que si se elimino el usuario es necesario que se deslogee automaticamente
  * false si es otro usuario
@@ -419,8 +426,8 @@ bool eliminarUsuario(string nombre, string clave, Sistema& sistema)
 
 /**
  * AgregarSoftware: Agrega un software a la biblioteca general 
- * @param nombre nombre del usuario que inicio sesión
- * @param clave clave del usuario
+ * @param string nombre del usuario que inicio sesión
+ * @param string clave del usuario
  * @param sistema clase que implementa la lógica
  * 
 */
@@ -589,8 +596,8 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 
 /**
  * EliminarSoftwareBiblioteca: Elimina un software de la biblioteca general
- * @param nombre nombre del usuario que inicio sesión
- * @param clave clave del usuario
+ * @param string nombre del usuario que inicio sesión
+ * @param string clave del usuario
  * @param sistema clase que implementa la lógica del programa
 */
 void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
@@ -653,8 +660,8 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
 
 /**
  * eliminarSoftwareSesion: Elimina un software (copia) en los registros de un usuario determinado
- * @param nombre nombre del usuario 
- * @param clave clave del usuario que desea eliminar un registro de un software
+ * @param string nombre del usuario 
+ * @param string clave del usuario que desea eliminar un registro de un software
  * @param sistema clase que implementa la lógica
 */
 void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
@@ -676,39 +683,60 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
 
 /**
  * registrarSoftware:  usuario registra un software a sus accesos (copias de softwares)
- * @param nombre nombre del usuario
- * @param clave clave del usuario
- * @param sistema clase que implementa la lógica
+ * @param string nombre del usuario
+ * @param string clave del usuario
+ * @param Sistema clase que implementa la lógica
 */
 void registrarSoftware(string nombre, string clave , Sistema& sistema)
 {  
     if(!sistema.verificarAcceso(nombre, clave) || sistema.isEmptySoftwares()) return; //Si no se encuentra el usuario, no continuar
-    string nombreSoft;
    
-    do
+    string nombreSoft;
+    do 
     {
         cout << "Registrar un software (Uno no existente en sus registros personales)" 
         << endl << sistema.getNombresSoftwares()
         << endl << "Ingrese el nombre del software a registrar: ";
         getline(cin,nombreSoft);
-        
-    }while(!sistema.existeSoftware(nombreSoft));
+    }
+    while(!sistema.existeSoftware(nombreSoft));
   
-
-
-    bool ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
-
-    if(ingresado)
+    bool ingresado = false;
+    transicion(1);
+    
+    if(((sistema.getSoftware(nombreSoft)->getClasificacion() == Software::A) && sistema.getEdadUsuario(nombre) < 18))
     {
-        cout << "Se ha registrado el software correctamente al usuario: " + nombre << endl;
+        cout << "No eres apto para registrarte a esta aplicación vuelve cuando hayas crecido :) " << endl;
     }
     else 
     {
-        cout << "No se pudo ingresal el software al usuario..." << endl;
+        bool ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
+    }
+
+    if(ingresado)
+    {
+        cout << "Se ha registrado el software: " << nombreSoft << " correctamente al usuario: " + nombre << endl;
+    }
+    else 
+    {
+        cout << "No se pudo ingresal el software " << nombreSoft << " al usuario..." << endl;
     }
 };   
 
-
+/**
+ * registrarSoftware:  usuario registra un software a sus accesos (copias de softwares)
+ * @param string nombre del usuario
+ * @param string clave del usuario
+ * @param Sistema clase que implementa la lógica
+ * @param string nombre del software
+*/
+void registrarSoftware(string nombre, string clave , Sistema& sistema, string nombreSoft)
+{  
+        if(!((sistema.getSoftware(nombreSoft)->getClasificacion() == Software::A) && sistema.getEdadUsuario(nombre) < 18))
+        {
+            sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
+        }
+};   
 /**
  * accederSoftware: Usuario accede a uno de sus registros (copias creadas anteriormente)
  * @param nombre nombre del usuario que desea acceder
@@ -740,10 +768,6 @@ void accederSoftware(string nombre , string clave, Sistema& sistema)
     if(!accedio)
     {
         cout << "\n El nombre del software que ingresaste no existe en tu repertorio..." << endl;
-    }
-    else 
-    {
-        cout << "Si accedio << endl";
     }
     transicion(1.2);
 };
@@ -835,6 +859,77 @@ void poblarBaseDatos(Sistema& sistema)
     sistema.agregarSocial("Omegle", "Omegle", Software::A, 0);
     /*Instancia de Social*/
 };
+
+
+void agregarAmigosPoblarDatos(Sistema& sistema)
+{
+    vector<Usuario*>* listaUsuario = sistema.getListaUsuario();
+    for(int i=0; i<listaUsuario->size();i++)
+    {
+        registrarSoftware(listaUsuario->at(i)->getNombre(), listaUsuario->at(i)->getClave(), sistema, "Instagram");
+        registrarSoftware(listaUsuario->at(i)->getNombre(), listaUsuario->at(i)->getClave(), sistema, "Omegle");
+    }    
+    vector<string>* sociales = new vector<string>(0);
+    sociales->push_back("Instagram");
+    sociales->push_back("Omegle");
+    Social* app;
+
+    for(int i=0; i<sociales->size();i++)
+    {
+        app = dynamic_cast<Social*>(sistema.getUsuario("Cristian","123")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("Cristian");
+        app->agregarAmigo(sistema.getUsuario("Manuel", "hs123"));
+        app->agregarAmigo(sistema.getUsuario("Jose", "123"));
+        app = dynamic_cast<Social*>(sistema.getUsuario("Manuel", "hs123")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("Manuel");
+        app->agregarAmigo(sistema.getUsuario("Jose", "123"));
+
+
+        app = dynamic_cast<Social*>(sistema.getUsuario("Andres", "km12")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("Andres");
+        app->agregarAmigo(sistema.getUsuario("Moia", "grmos"));
+        app->agregarAmigo(sistema.getUsuario("Shelly","asd123"));
+        app = dynamic_cast<Social*>(sistema.getUsuario("Moia", "grmos")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("Moia");
+        app->agregarAmigo(sistema.getUsuario("Shelly","asd123"));
+
+        app = dynamic_cast<Social*>(sistema.getUsuario("Colt", "coltNice")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("Colt");
+        app->agregarAmigo(sistema.getUsuario("bluefox", "jijia"));
+        app->agregarAmigo(sistema.getUsuario("doblangel", "claramente"));
+        app = dynamic_cast<Social*>(sistema.getUsuario("doblangel", "claramente")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("doblangel");
+        app->agregarAmigo(sistema.getUsuario("bluefox", "jijia"));
+
+        app = dynamic_cast<Social*>(sistema.getUsuario("oscarrojas", "godines")->getSoftware(sociales->at(i)));
+        app->asociarUsuario("oscarrojas");
+        app->agregarAmigo(sistema.getUsuario("dj_garay", "vegetaDg"));
+        app->agregarAmigo(sistema.getUsuario("Cristian", "123"));
+        
+        app = dynamic_cast<Social*>(sistema.getUsuario("Cristian", "123")->getSoftware(sociales->at(i)));
+        app->agregarAmigo(sistema.getUsuario("dj_garay", "vegetaDg"));
+    }
+    
+    
+    app = dynamic_cast<Social*>(sistema.getUsuario("Nina", "gavo")->getSoftware("Instagram"));
+    app->asociarUsuario("Nina");
+    app->agregarAmigo(sistema.getUsuario("Senda", "senda3000"));
+    app->agregarAmigo(sistema.getUsuario("Narla", "123"));
+    app->agregarAmigo(sistema.getUsuario("Augusto", "123"));
+    app = dynamic_cast<Social*>(sistema.getUsuario("Augusto", "123")->getSoftware("Instagram"));
+    app->asociarUsuario("Augusto");
+    app->agregarAmigo(sistema.getUsuario("Senda", "senda3000"));
+    app->agregarAmigo(sistema.getUsuario("Narla", "123"));
+
+
+    
+};
+
+
+
+
+
+
 
 void accederLog(string nombre, string clave, Sistema& sistema)
 {
