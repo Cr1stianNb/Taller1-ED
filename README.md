@@ -1,5 +1,6 @@
 # Taller1-ED
-
+Autor: Cristian Nettle 
+rut: 21.280.529-7
 ## Instancias de Admin
 
 admin1:{nombre:"Cristian",clave:"123",edad:20,correo:"cristian@admin.cl"}
