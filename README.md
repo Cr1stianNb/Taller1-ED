@@ -2,16 +2,16 @@
 ## Instancias de Admin
 admin1:{nombre:"Cristian",clave:"123",edad:20,correo:"cristian@admin.cl"}
 ## Instancias de Usuario Mayor
-usuarioMayor{nombre:"Jose",clave: "123",edad: 30,correo:"jose@normal.cl"}
-usuarioMayor{nombre:"Manuel",clave: "hs123",edad: 40,correo:"manuel@normal.cl"}
-usuarioMayor{nombre:"Andres",clave: "km12",edad: 33,correo:"andres@normal.cl"}
-usuarioMayor{nombre:"Moia",clave: "grmos",edad: 19,correo:"usuarioNormal@aaa.cl"}
-usuarioMayor{nombre:"Shelly",clave:"asd123",edad: 23,correo:"shelly@normalcorreo.cl"}
-usuarioMayor{nombre:"Colt",clave: "coltNice",edad: 90,correo:"terceraEdad@normal.cl"}
-usuarioMayor{nombre:"bluefox",clave: "jijia",edad: 50,correo:"bluefox@normal.cl"}
-usuarioMayor{nombre:"doblangel",clave: "claramente",edad: 34,correo:"aparentemente@normal.cl"}
-usuarioMayor{nombre:"oscarrojas",clave: "godines",edad: 60,correo:"oscarsito123@normal.cl"}
-usuarioMayor{nombre:"dj_garay",clave: "vegetaDg",edad: 21,correo:"vegeta@dragonBoll.cl"}
+usuarioMayor{nombre:"Jose",clave: "123",edad: 30,correo:"jose@normal.cl"}\n
+usuarioMayor{nombre:"Manuel",clave: "hs123",edad: 40,correo:"manuel@normal.cl"}\n
+usuarioMayor{nombre:"Andres",clave: "km12",edad: 33,correo:"andres@normal.cl"}\n
+usuarioMayor{nombre:"Moia",clave: "grmos",edad: 19,correo:"usuarioNormal@aaa.cl"}\n
+usuarioMayor{nombre:"Shelly",clave:"asd123",edad: 23,correo:"shelly@normalcorreo.cl"}\n
+usuarioMayor{nombre:"Colt",clave: "coltNice",edad: 90,correo:"terceraEdad@normal.cl"}\n
+usuarioMayor{nombre:"bluefox",clave: "jijia",edad: 50,correo:"bluefox@normal.cl"}\n
+usuarioMayor{nombre:"doblangel",clave: "claramente",edad: 34,correo:"aparentemente@normal.cl"}\n
+usuarioMayor{nombre:"oscarrojas",clave: "godines",edad: 60,correo:"oscarsito123@normal.cl"}\n
+usuarioMayor{nombre:"dj_garay",clave: "vegetaDg",edad: 21,correo:"vegeta@dragonBoll.cl"}\n
 ## Instancias de Usuario Menor
 usuarioMenor{nombre:"Augusto",clave: "123",edad: 10}
 usuarioMenor{nombre:"Nina",clave: "gavo",edad: 9}
