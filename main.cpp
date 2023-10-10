@@ -36,7 +36,6 @@ void agregarUsuario(string, string, Sistema&);
 bool eliminarUsuario(string, string, Sistema&);
 void registrarSoftware(string, string, Sistema&, string);
 void registrarSoftware(string, string, Sistema&);
-void accederLog(string, string, Sistema&);
 bool verificarTodosLosUsuarios(vector<string>* listaUsuarios, string nombreSoft);
 void mostrarBiblioteca(Sistema&);
 void poblarBaseDatos(Sistema&);
@@ -228,9 +227,7 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
         << endl << "5) Agregar Usuario "
         << endl << "6) Eliminar Usuario " 
         << endl << "7) Acceder Software" 
-        << endl << "8) Acceder al log"
         << endl << "9) Salir";
-        cout << endl  << "size del usuario ->" << sistema->getUsuario(nombre, clave)->getListaSoftware()->size() << endl << endl;
         int opc = parseInt("\nEscoge una opcion: ");
         
 
@@ -261,11 +258,6 @@ void mostrarMenuAdmin(string nombre, string clave, Sistema* sistema)
         case 7:
             accederSoftware(nombre, clave, *sistema);
             break;
-        
-        case 8:
-            accederLog(nombre, clave, *sistema);
-            break;
-        
         case 9: 
             cout << "Ha salido del menu administrador" << endl;
             return;
@@ -296,7 +288,6 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
         << endl << "4) Eliminar Software de tus sesiones"
         << endl << "5) Acceder Software"    
         << endl << "6) Salir";
-        cout << endl  << "size del usuario ->" << sistema->getUsuario(nombre, clave)->getListaSoftware()->size() << endl << endl;
         int opc = parseInt("\nEscoge una opcion: ");
         transicion(0);
         switch (opc)
@@ -339,6 +330,7 @@ void mostrarMenuUsuario(string nombre, string clave, Sistema* sistema)
 */
 void agregarUsuario(string nombre, string clave, Sistema& sistema)
 {
+    bool seAgrego = false;
     string nombreUsuario;
     cout << "Ingrese el nombre del Usuario: " << endl;
     getline(cin,nombreUsuario);
@@ -367,8 +359,8 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
     do
     {
         cout << "Ingrese tipo de Usuario: " 
-        << endl << "1) Normal"
-        << endl << "2) Admin"
+        << endl << "1) Admin"
+        << endl << "2) Normal"
         << endl;
         opcTipo  = parseInt("Escoga una opcion: ");
     }  while(opcTipo != 1 && opcTipo != 2);
@@ -377,17 +369,26 @@ void agregarUsuario(string nombre, string clave, Sistema& sistema)
     {
     case 1:
         
-        sistema.agregarAdmin(nombreUsuario, claveNuevo, edad, correo);
+        seAgrego = sistema.agregarAdmin(nombreUsuario, claveNuevo, edad, correo);
         break;
 
     case 2:
-        sistema.agregarUsuarioNormal(nombreUsuario, claveNuevo, edad, correo);
+        seAgrego = sistema.agregarUsuarioNormal(nombreUsuario, claveNuevo, edad, correo);
         break;
     
     default:
         cout << "Opcion no encontrada" << endl;
         break;
     }
+    if(seAgrego)
+    {
+        cout << "Se ha agregado correctamente" << endl;
+    }
+    else 
+    {
+        cout << "El usuario que agregaste ya se encuentra en el sistema" << endl;
+    }
+    transicion(3);
 };
 
 /**
@@ -458,7 +459,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             clasificacion = Software::A;
             break;
         default:
-            cout << "Opción no válida...\n se cancela agregación" << endl;
+            cout << "Opcion no valida...\n se cancela agregacion" << endl;
             return;
     }
     double precio = parseDouble("\nIngrese el precio del producto: ");
@@ -510,7 +511,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             }
             else 
             {
-                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+                cout << "El nombre de la aplicacion ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
             }
             break;
         
@@ -521,12 +522,12 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             }
             else 
             {
-                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+                cout << "El nombre de la aplicacion ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
             }
             break;
 
         case 4:
-            cout << "Advertencia: Al ser un software de tipo producción, la clasificación será de tipo A  (Adulto)" << endl;
+            cout << "Advertencia: Al ser un software de tipo producción, la clasificación sera de tipo A  (Adulto)" << endl;
             while(!Produccion::verificarSolucion(tipoSolucion))
             {
                 cout << "Ingrese el tipo de Solución del software (1 de las siguientes opciones): " << endl << "("
@@ -539,11 +540,11 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             }
             if(sistema.agregarProduccion(nombreSoft, developer, Software::A , precio, tipoSolucion))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
-                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+                cout << "El nombre de la aplicacion ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
             }
 
             break;
@@ -564,7 +565,7 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
             }
             if(sistema.agregarProduccion(nombreSoft, developer, clasificacion , precio, malware))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
@@ -577,18 +578,18 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 
             if(sistema.agregarSocial(nombreSoft, developer, clasificacion, precio))
             {
-                cout << "Fue ingresado con éxito" << endl;
+                cout << "Fue ingresado con exito" << endl;
             }
             else 
             {
-                cout << "El nombre de la aplicación ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
+                cout << "El nombre de la aplicacion ya existe en la biblioteca, por lo tanto no se agrego al repertorio" << endl;
             }
             break;
 
             break;
 
         default:
-            cout << "Opción incorrecta...\nSe cancela operación" << endl;
+            cout << "Opcion incorrecta...\nSe cancela operacion" << endl;
             return;
 
     };
@@ -602,7 +603,8 @@ void agregarSoftware(string nombre, string clave, Sistema& sistema)
 */
 void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
 {
-    cout << "Ingrese el nombre del software a ELIMINAR en la Biblioteca: (Se pedira autorización si es que existe otro usuario utilizando la app)" << endl;
+    cout << "Ingrese el nombre del software a ELIMINAR en la Biblioteca: (Se pedira autorizacion si es que existe otro usuario utilizando la app)" << endl;
+    cout << sistema.getNombresSoftwares() << endl;
     string nombreSoftware;
     getline(cin,nombreSoftware);
     vector<string>* listaUsuario = sistema.getNombresUsuariosSoftware(nombreSoftware);
@@ -611,16 +613,15 @@ void eliminarSoftwareBiblioteca(string nombre , string clave, Sistema& sistema)
     {
         if(verificarTodosLosUsuarios(listaUsuario, nombreSoftware))
         {
-            cout << "Se eliminará el software  de la biblioteca general" + nombreSoftware << endl;
+            cout << "Se eliminara el software  de la biblioteca general" + nombreSoftware << endl;
             sistema.eliminarSoftwareBiblioteca(nombreSoftware);
         }
         else 
         {
-            cout  << " , no se elimino la Aplicación..." << endl;
+            cout  << " , no se elimino la Aplicacion..." << endl;
         }
     }
-    cout << "El tamaño de la lista es: " << listaUsuario->size() << endl;
-    this_thread::sleep_for(chrono::seconds(10));
+    transicion(5);
 
 };
 
@@ -636,11 +637,11 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
     int opc = 0 ;
     for(int i=0; i<listaUsuario->size();i++)
     {
-        cout << "Nombre de Usuario: " << listaUsuario->at(i) << " ¿Deseas eliminar el software: " + nombreSoft + "?" 
+        cout << "Nombre de Usuario: " << listaUsuario->at(i) << " Deseas eliminar el software: " + nombreSoft + "?" 
         << endl << "1) Si"
         << endl << "2) No" 
         << endl;
-        opc = parseInt("Escoge una opción: ");
+        opc = parseInt("Escoge una opcion: ");
 
         switch(opc)
         {
@@ -648,10 +649,10 @@ bool verificarTodosLosUsuarios(vector<string>* listaUsuario, string nombreSoft)
                 break;
             case 2:
                 eliminar = false;
-                cout << "El usuario " << listaUsuario->at(i) << "Se negó a eliminar el software";
+                cout << "El usuario " << listaUsuario->at(i) << "Se nego a eliminar el software";
                 return eliminar;
             default:
-                cout << "No se eliminará debido a una opción incorrecta..." << endl;
+                cout << "No se eliminara debido a una opcion incorrecta..." << endl;
                 return false;
         }
     }
@@ -668,7 +669,7 @@ void eliminarSoftwareSesion(string nombre, string clave, Sistema& sistema)
 {
     string nombreSoft;
     cout << sistema.getNombresSoftwaresUsuario(nombre, clave) << endl;
-    cout << "Ingresa el nombre del software a eliminar de la sesión activa: " << endl;
+    cout << "Ingresa el nombre del software a eliminar de la sesion activa: " << endl;
     getline(cin,nombreSoft);
     bool estaEliminado = sistema.eliminarSoftwareUsuario(nombre, clave, nombreSoft);
     if(estaEliminado) 
@@ -706,11 +707,11 @@ void registrarSoftware(string nombre, string clave , Sistema& sistema)
     
     if(((sistema.getSoftware(nombreSoft)->getClasificacion() == Software::A) && sistema.getEdadUsuario(nombre) < 18))
     {
-        cout << "No eres apto para registrarte a esta aplicación vuelve cuando hayas crecido :) " << endl;
+        cout << "No eres apto para registrarte a esta aplicacion vuelve cuando hayas crecido :) " << endl;
     }
     else 
     {
-        bool ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
+        ingresado = sistema.agregarSoftwareUsuario(nombre, clave, nombreSoft);
     }
 
     if(ingresado)
@@ -925,13 +926,3 @@ void agregarAmigosPoblarDatos(Sistema& sistema)
     
 };
 
-
-
-
-
-
-
-void accederLog(string nombre, string clave, Sistema& sistema)
-{
-
-};

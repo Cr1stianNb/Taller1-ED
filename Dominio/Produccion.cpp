@@ -2,7 +2,7 @@
 
 
 
-const std::string  Produccion::VIDEO = "Video", Produccion::MUSICA = "Música", Produccion::STREAMING = "Streaming", Produccion::FOTOS = "Fotos";
+const std::string  Produccion::VIDEO = "Video", Produccion::MUSICA = "Musica", Produccion::STREAMING = "Streaming", Produccion::FOTOS = "Fotos";
 
 
 Produccion::Produccion(const Produccion& otro): Software(otro.nombre, otro.developer, otro.clasificacion, otro.precio)

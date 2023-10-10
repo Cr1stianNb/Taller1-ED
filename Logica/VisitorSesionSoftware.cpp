@@ -84,7 +84,7 @@ void VisitorSesionSoftware::acepta(Navegador& navegador, Usuario* usuario)
             << endl << "1) Agregar Historial"
             << endl << "2) Ver los ultimos 10 registros"
             << endl << "3) Salir"
-            << endl << " Escoge una opcion: \n";
+            << endl;
             opc = parseInt("Ingrese una opcion: ");
         }while(opc != 1 && opc != 2 && opc != 3);
     
@@ -93,7 +93,7 @@ void VisitorSesionSoftware::acepta(Navegador& navegador, Usuario* usuario)
         {
         case 1:
             cout << "Ingrese que pagina visito: \n";
-            cin >> pagina;
+            getline(cin, pagina);
             navegador.agregarPagina(pagina);
             cout << "Se agrego a tu historial correctamente" << endl;
             break;
@@ -141,8 +141,7 @@ void VisitorSesionSoftware::acepta(Ofimatica& ofimatica, Usuario* usuario)
     switch (opc)
     {
         case 1:
-            cout << "Ingrese que página visito: \n";
-            getline(cin, pagina);
+    
             ofimatica.agregarArchivo();
             cout << "Se agrego el documento correctamente" << endl;
             break;
@@ -271,7 +270,7 @@ void VisitorSesionSoftware::acepta(Seguridad& seguridad, Usuario* usuario)
                 cout << "Opcion incorrecta..." << endl;
                 break;
         }
-        transicion(1);
+        transicion(3);
     }
 };
 
@@ -394,7 +393,7 @@ void VisitorSesionSoftware::acepta(Social& social, Usuario* usuario)
             break;
         }
 
-        transicion(1.5);
+        transicion(3);
     }
 }
 

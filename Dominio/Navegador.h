@@ -9,8 +9,8 @@
 class Navegador : public Software
 {
     private:
-        int contador;
         std::vector<std::string>* historial;
+        int contador;
     public:
         /**
          * Constructor copia 

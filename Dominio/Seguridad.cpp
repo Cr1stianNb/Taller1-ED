@@ -7,6 +7,7 @@ const std::string Seguridad::RANSOMWARE = "Ransomware", Seguridad::SPYWARE = "Sp
 Seguridad::Seguridad(const Seguridad& otro): Software(otro.nombre, otro.developer, otro.clasificacion, otro.precio)
 {
     this->precio = otro.precio;
+    this->tipo = otro.tipo;
 };
 
 Seguridad::Seguridad(std::string nombre, std::string developer, std::string clasificacion, double precio, std::string tipo):
@@ -20,6 +21,7 @@ std::string Seguridad::getTipo(){return this->tipo;}
 
 std::string Seguridad::getInforme(Usuario* usuario)
 {
+    if(usuario == nullptr) return "Error el ancontrar el usuario...";
     int contadorMalware = 0;
     std::string texto = "";
     std::vector<Software*>* listaSoftware = usuario->getListaSoftware();
@@ -28,7 +30,7 @@ std::string Seguridad::getInforme(Usuario* usuario)
     {
         Software* software = listaSoftware->at(i);
         software->visita(visitor);
-        if(visitor->getTipoSoftware() == VisitorSoftware::SOCIAL) 
+        if(visitor->getTipoSoftware() == VisitorSoftware::SEGURIDAD) 
         {
             Seguridad* seg = dynamic_cast<Seguridad*>(software);
             if(seg->getTipo() == this->tipo)
@@ -42,7 +44,8 @@ std::string Seguridad::getInforme(Usuario* usuario)
 }
 std::string Seguridad::getPorcentaje(Usuario* usuario)
 {
-    int contadorTotal = 0;
+    if(usuario == nullptr) return "Error el ancontrar el usuario...";
+    double contadorTotal = 0;
     int contadorMalware = 0;
     std::string texto = "";
     std::vector<Software*>* listaSoftware = usuario->getListaSoftware();
@@ -51,7 +54,7 @@ std::string Seguridad::getPorcentaje(Usuario* usuario)
     {
         Software* software = listaSoftware->at(i);
         software->visita(visitor);
-        if(visitor->getTipoSoftware() == VisitorSoftware::SOCIAL)
+        if(visitor->getTipoSoftware() == VisitorSoftware::SEGURIDAD)
         {
             contadorTotal++;
             Seguridad* seg = dynamic_cast<Seguridad*>(software);
