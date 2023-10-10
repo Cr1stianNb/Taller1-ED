@@ -1,7 +1,11 @@
 # Taller1-ED
+
 ## Instancias de Admin
+
 admin1:{nombre:"Cristian",clave:"123",edad:20,correo:"cristian@admin.cl"}
+
 ## Instancias de Usuario Mayor
+
 usuarioMayor{nombre:"Jose",clave: "123",edad: 30,correo:"jose@normal.cl"}
 
 usuarioMayor{nombre:"Manuel",clave: "hs123",edad: 40,correo:"manuel@normal.cl"}
@@ -23,6 +27,7 @@ usuarioMayor{nombre:"oscarrojas",clave: "godines",edad: 60,correo:"oscarsito123@
 usuarioMayor{nombre:"dj_garay",clave: "vegetaDg",edad: 21,correo:"vegeta@dragonBoll.cl"}
 
 ## Instancias de Usuario Menor
+
 usuarioMenor{nombre:"Augusto",clave: "123",edad: 10}
 
 usuarioMenor{nombre:"Nina",clave: "gavo",edad: 9}
@@ -32,6 +37,7 @@ usuarioMenor{nombre:"Senda",clave: "senda3000",edad:13}
 usuarioMenor{nombre:"Narla",clave: "123",edad: 14}   
 
 ## Instancias de Juego
+
 Juego{nombre:"Grand Theft Auto V", developer: "Rockstar North",Clasificacion: "A", precio:29.99, Genero: "Adventuras"}
 
 Juego{nombre:"The Witcher 3: Wild Hunt",developer:  "CD Projekt",Clasificacion: "E",precio: 39.99, Genero: "Adventuras"}
@@ -73,6 +79,7 @@ Juego{nombre:"Fornite", developer: "Epic games", Clasificacion: "E",precio: 59.9
 Juego{nombre:"CSGO", developer: "Valve", Clasificacion: "A",precio: 19.99, Genero: "FPS"}
 
 ## Instancia de Ofimatica
+
 Ofimatica{nombre:"Word",developer:"Microsoft",clasificacion: "E",precio: 43.3}
 
 Ofimatica{nombre:"Atom",developer:"Github",clasificacion: "E",precio: 0}
@@ -84,6 +91,7 @@ Ofimatica{nombre:"PowerPoint",developer:"Microsoft",clasificacion: "E",precio: 2
 Ofimatica{nombre:"Google Docs",developer:"Google",clasificacion: "E",precio: 0}
 
 ## Instancia de Navegador
+
 Produccion{nombre:"Photoshop",developer:"Adobe",clasificacion: "A",precio: 90.1, tipoProduccion: "FOTOS"}
 
 Produccion{nombre:"Manim",developer:"Manim Community",clasificacion: "A",precio: 0, tipoProduccion: "VIDEO"}
@@ -93,6 +101,7 @@ Produccion{nombre:"FL studio",developer:"Imagine Line",clasificacion: "A",precio
 Produccion{nombre:"StreamLabs OBS",developer:"Jim",clasificacion: "A" ,precio: 0 , tipoProduccion: "STREAMING"}
 
 ## Instancia de Seguridad
+
 seguridad{nombre:"Windows Defender",developer:"Microsoft", clasificacion: "A",precio: 1, tipoSeguridad: "RANSOMWARE"}
 
 seguridad{nombre:"Norton Antivirus",developer:"NortonLifeLock", clasificacion: "A",precio: 10.1, tipoSeguridad: "TROYANOS"}
@@ -101,9 +110,12 @@ seguridad{nombre:"McAfee",developer:"McAfee", clasificacion: "E",precio: 40.1, t
 
 seguridad{nombre:"BitDefender",developer:"Bitdefender", clasificacion: "E",precio: 60.3, tipoSeguridad: "ROOTKITS"}
 
+
 seguridad{nombre:"Avast",developer:"Avast Software", clasificacion: "A",precio: 101, tipoSeguridad: "GUSANOS"}
 
+
 seguridad{nombre:"Sophos Antivirus",developer:"Sophos group", clasificacion: "E",precio: 1.12, tipoSeguridad: "BOTNETS"}
+
 
 ## Instancia de Social
 Social{nombre:"Instagram",developer "Meta",clasificacion "E",precio: 0}
